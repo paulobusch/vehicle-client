@@ -1,1 +1,8 @@
 <form></form>
+<div>
+    {{ colors | json }}
+    {{ fuels | json }}
+    {{ models | json }}
+    {{ brands | json }}
+</div>
+<ngx-snackbar position="bottom-center" [max]="3"></ngx-snackbar>

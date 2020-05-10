@@ -20,6 +20,7 @@ import { QueriesHandlerService } from './shared/handlers/query-handler-service';
 import { MutationsHandlerService } from './shared/handlers/mutation-handler-service';
 import { VehiclesFormComponent } from './vehicles/vehicles-form/vehicles-form.component';
 import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.component';
+import { HttpInterceptorProviders } from './shared/interceptors/provider-interceptor';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.co
     AuthService,
     MutationsHandlerService,
     QueriesHandlerService,
+    HttpInterceptorProviders,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],
   bootstrap: [AppComponent]

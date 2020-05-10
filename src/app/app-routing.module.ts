@@ -13,8 +13,10 @@ const routes: Routes = [
   { path: 'announcements', component: AnnouncementsListComponent },
   { path: 'reservations', canActivate: [AuthGuard], component: ReservationsListComponent },
   { path: 'vehicles', canActivate: [AuthGuard], component: VehiclesListComponent, children: [
-    { path: 'new', component: VehiclesFormComponent },
-    { path: 'edit/:id', component: VehiclesFormComponent }
+    { path: '', children: [
+      { path: 'new', component: VehiclesFormComponent },
+      { path: 'edit/:id', component: VehiclesFormComponent }
+    ] }
   ] }
 ];
 
