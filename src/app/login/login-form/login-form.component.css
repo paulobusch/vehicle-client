@@ -1,0 +1,14 @@
+
+.header {
+    font-size: 15pt;
+    text-align: center;
+    color: white;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.login {
+    margin-top: 100px !important;
+}
