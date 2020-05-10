@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "vehicle-client"
+    }
+  },
+  "defaultProject": "vehicle-client",
+  "cli": {
+    "analytics": false
+  }
 }
