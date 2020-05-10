@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { User } from './login/mutations/view-models/user-result';
+import { AuthService } from './shared/services/auth-service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'vehicle-client';
+  user: User;
+
+  constructor(
+    private authService: AuthService
+  ) {
+    this.authService.currentUser.subscribe(us => this.user = us);
+  }
 }

@@ -5,7 +5,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
-
+import {SnackbarModule} from 'ngx-snackbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnnouncementsListComponent } from './announcements/announcements-list/announcements-list.component';
@@ -16,6 +16,8 @@ import { LoginFormComponent } from './login/login-form/login-form.component';
 import { AuthService } from './shared/services/auth-service';
 import { AuthGuard } from './shared/guards/auth-guard';
 import { HttpClientModule } from '@angular/common/http';
+import { QueriesHandlerService } from './shared/handlers/query-handler-service';
+import { MutationsHandlerService } from './shared/handlers/mutation-handler-service';
 
 @NgModule({
   declarations: [
@@ -34,11 +36,14 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    SnackbarModule.forRoot()
   ],
   providers: [
     AuthGuard,
     AuthService,
+    MutationsHandlerService,
+    QueriesHandlerService,
     { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],
   bootstrap: [AppComponent]

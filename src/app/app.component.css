@@ -1,0 +1,9 @@
+.user{
+    color: white;
+}
+
+.user svg {
+    font-size: 20pt;
+    margin: 0 15px;
+    cursor: pointer;
+}
