@@ -18,6 +18,8 @@ import { AuthGuard } from './shared/guards/auth-guard';
 import { HttpClientModule } from '@angular/common/http';
 import { QueriesHandlerService } from './shared/handlers/query-handler-service';
 import { MutationsHandlerService } from './shared/handlers/mutation-handler-service';
+import { VehiclesFormComponent } from './vehicles/vehicles-form/vehicles-form.component';
+import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { MutationsHandlerService } from './shared/handlers/mutation-handler-serv
     AnnouncementsFormComponent,
     ReservationsListComponent,
     ReservationsFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    VehiclesFormComponent,
+    VehiclesListComponent
   ],
   imports: [
     FormsModule,

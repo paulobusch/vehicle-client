@@ -8,16 +8,16 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/announcements']" routerLinkActive="active">Anúncios</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="user">
         <a class="nav-link" [routerLink]="['/reservations']" routerLinkActive="active">Reservas</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="user">
         <a class="nav-link" [routerLink]="['/vehicles']" routerLinkActive="active">Veículos</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="user">
         <a class="nav-link" [routerLink]="['/models']" routerLinkActive="active">Modelos</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="user">
         <a class="nav-link" [routerLink]="['/brands']" routerLinkActive="active">Marcas</a>
       </li>
       <li class="nav-item">
