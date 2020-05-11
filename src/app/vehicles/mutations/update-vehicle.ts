@@ -3,7 +3,7 @@ import { IMutationResult } from 'src/app/shared/handlers/results/mutation-result
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-export class CreateVechicle implements IMutation {
+export class UpdateVechicle implements IMutation {
     public id: string;
     public year: number;
     public fuelId: string;
@@ -12,6 +12,6 @@ export class CreateVechicle implements IMutation {
     public modelId: string;
 
     execute(http: HttpClient, apiUrl: string): Observable<IMutationResult> {
-        return http.post<IMutationResult>(`${apiUrl}/vehicles`, this);
+        return http.put<IMutationResult>(`${apiUrl}/vehicles/${this.id}`, this);
     }
 }

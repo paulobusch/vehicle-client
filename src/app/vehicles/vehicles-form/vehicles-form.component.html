@@ -1,8 +1,40 @@
-<form></form>
-<div>
-    {{ colors | json }}
-    {{ fuels | json }}
-    {{ models | json }}
-    {{ brands | json }}
+<div class="row justify-content-center">
+    <div class="col-6">
+        <form [formGroup]="form" (submit)="save()">
+            <div class="row justify-content-between">
+                <div class="form-group col-6">
+                    <input type="number" class="form-control" formControlName="year" [class.is-invalid]="!isValidField('year')" placeholder="Ano">
+                    <div class="invalid-feedback">O campo ano deve ser válido!</div>
+                </div>
+                <div class="form-group col-6">
+                    <input type="text" class="form-control" [typeahead]="colors" [(ngModel)]="colorName" [ngModelOptions]="{standalone: true}" 
+                        (typeaheadOnSelect)="onSelect($event.item.id, 'colorId')" typeaheadOptionField="name" [class.is-invalid]="!isValidField('colorId')" placeholder="Cor"/>
+                    <div class="invalid-feedback">O campo cor deve ser informado!</div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="form-group col-6">
+                    <input type="text" class="form-control" [typeahead]="fuels" [(ngModel)]="fuelName" [ngModelOptions]="{standalone: true}" 
+                        (typeaheadOnSelect)="onSelect($event.item.id, 'fuelId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('fuelId')" placeholder="Combustível"/>
+                    <div class="invalid-feedback">O campo combustível deve ser informado!</div>
+                </div>
+                <div class="form-group col-6">
+                    <input type="text" class="form-control" [typeahead]="models" [(ngModel)]="modelName" [ngModelOptions]="{standalone: true}" 
+                        (typeaheadOnSelect)="onSelect($event.item.id, 'modelId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('modelId')" placeholder="Modelo"/>
+                    <div class="invalid-feedback">O campo modelo deve ser informado!</div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="form-group col-9">
+                    <input type="text" class="form-control" [typeahead]="brands" [(ngModel)]="brandName" [ngModelOptions]="{standalone: true}" 
+                        (typeaheadOnSelect)="onSelect($event.item.id, 'brandId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('brandId')" placeholder="marca"/>
+                    <div class="invalid-feedback">O campo marca deve ser informado!</div>
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </form>
+        <ngx-snackbar position="bottom-center" [max]="3"></ngx-snackbar>
+    </div>
 </div>
-<ngx-snackbar position="bottom-center" [max]="3"></ngx-snackbar>

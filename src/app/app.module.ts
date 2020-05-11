@@ -5,7 +5,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
-import {SnackbarModule} from 'ngx-snackbar';
+import { SnackbarModule } from 'ngx-snackbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnnouncementsListComponent } from './announcements/announcements-list/announcements-list.component';
@@ -21,6 +21,8 @@ import { MutationsHandlerService } from './shared/handlers/mutation-handler-serv
 import { VehiclesFormComponent } from './vehicles/vehicles-form/vehicles-form.component';
 import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.component';
 import { HttpInterceptorProviders } from './shared/interceptors/provider-interceptor';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { HttpInterceptorProviders } from './shared/interceptors/provider-interce
   ],
   imports: [
     FormsModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
@@ -42,7 +45,8 @@ import { HttpInterceptorProviders } from './shared/interceptors/provider-interce
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    SnackbarModule.forRoot()
+    SnackbarModule.forRoot(),
+    TypeaheadModule.forRoot()
   ],
   providers: [
     AuthGuard,
