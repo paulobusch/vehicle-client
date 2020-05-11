@@ -1,11 +1,11 @@
 <div class="row justify-content-center">
     <div class="col-md-8 col-sm-12">
         <h3 class="title">
-            {{ !isNew && vehicle ? 'Edição' : '' }}
+            {{ !isNew && vehicle ? 'Edição de Veículo' : '' }}
             {{ !isNew && !vehicle ? 'Carregando...' : '' }}
-            {{ isNew ? 'Cadastro' : '' }}
+            {{ isNew ? 'Cadastro de Veículo' : '' }}
         </h3>
-        <form [formGroup]="form" (submit)="save()">
+        <form [formGroup]="form">
             <div class="row justify-content-between">
                 <div class="form-group col-6">
                     <input type="number" class="form-control" formControlName="year" [class.is-invalid]="!isValidField('year')" placeholder="Ano">
@@ -36,7 +36,8 @@
                     <div class="invalid-feedback">O campo marca deve ser informado!</div>
                 </div>
                 <div class="col-3">
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="submit" *ngIf="isNew || form.dirty" (click)="save()" class="btn btn-primary">Salvar</button>
+                    <button type="submit" *ngIf="!isNew && !form.dirty" (click)="close()" class="btn btn-primary">Fechar</button>
                 </div>
             </div>
         </form>

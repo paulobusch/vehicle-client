@@ -16,6 +16,8 @@ import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handle
 import { NewId } from 'src/app/shared/random/new-id';
 import { UpdateVechicle } from '../mutations/update-vehicle';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/ngx-bootstrap-typeahead';
+import { GetVehicle } from '../queries/get-vehicle';
+import { VehicleDetail } from '../queries/view-models/vehicle-detail';
 
 @Component({
   selector: 'app-vehicles-form',
@@ -27,7 +29,7 @@ export class VehiclesFormComponent implements OnInit {
   id: string;
   isNew: boolean;
   form: FormGroup;
-  vehicle: any;
+  vehicle: VehicleDetail;
 
   colors: ColorList[] = [];
   fuels: FuelList[] = [];
@@ -60,6 +62,26 @@ export class VehiclesFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSelects();
+    this.loadVehicle();
+  }
+
+  loadVehicle() {
+    if (this.isNew) return;
+    const query = new GetVehicle(this.id);
+    this.queriesHandler.handle(query).subscribe(
+      (rs) => this.setData(rs.data),
+      (err) => this.snackbarService.add({ msg: 'Falha ao carregar veículo!', timeout: 3000 })
+    );
+  }
+
+  setData(vehicle: VehicleDetail) {
+    this.vehicle = vehicle;
+    if (!vehicle) return;
+    this.form.patchValue(this.vehicle);
+    this.fuelName = this.vehicle.fuelName;
+    this.colorName = this.vehicle.colorName;
+    this.brandName = this.vehicle.brandName;
+    this.modelName = this.vehicle.modelName;
   }
 
   save() {
@@ -71,16 +93,20 @@ export class VehiclesFormComponent implements OnInit {
     if (this.isNew) {
       const mutation = Object.assign(new CreateVechicle(), value);
       this.mutationsHandler.handle(mutation).subscribe(
-        (rs) => this.router.navigate(['vehicles']),
+        (rs) => this.close(),
         () => this.snackbarService.add({ msg: 'Falha ao salvar veículo!', timeout: 3000 })
       );
     } else {
       const mutation = Object.assign(new UpdateVechicle(), value);
       this.mutationsHandler.handle(mutation).subscribe(
-        (rs) => this.router.navigate(['vehicles']),
+        (rs) => this.close(),
         () => this.snackbarService.add({ msg: 'Falha ao atualizar veículo!', timeout: 3000 })
       );
     }
+  }
+
+  close() {
+    this.router.navigate(['vehicles']);
   }
 
   onSelect(valueId: string, fieldId: string): void {

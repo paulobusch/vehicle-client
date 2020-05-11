@@ -35,7 +35,7 @@
                 <th>Combustível</th>
             </thead>
             <tbody>
-                <tr *ngFor="let vehicle of vehicles">
+                <tr *ngFor="let vehicle of vehicles" [routerLink]="['edit', vehicle.id]">
                     <td>{{ vehicle.year }}</td>
                     <td>{{ vehicle.colorName }}</td>
                     <td>{{ vehicle.brandName }}</td>
