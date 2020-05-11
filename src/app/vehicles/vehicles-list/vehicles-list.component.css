@@ -1,0 +1,25 @@
+.list {
+    margin-top: 25px;
+}
+
+.list .feedback {
+    text-align: center;
+    font-size: 15pt;
+}
+
+table {
+    display: block;
+    max-height: calc(95vh - 150px);
+    overflow-y: scroll;
+}
+
+table thead th {
+    background-color: white;
+    position: sticky;
+    top: 0;
+}
+
+table tr td:nth-child(3),
+table tr td:nth-child(4) {
+    word-break: break-word;
+}

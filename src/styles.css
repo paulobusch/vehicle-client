@@ -1,6 +1,4 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~ngx-snackbar/bundles/style.css';
 
-body{
-    background-color: rgba(217,237,247,1);
-}
+.pointer { cursor: pointer; }

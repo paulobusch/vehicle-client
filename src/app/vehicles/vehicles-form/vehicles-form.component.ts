@@ -27,6 +27,7 @@ export class VehiclesFormComponent implements OnInit {
   id: string;
   isNew: boolean;
   form: FormGroup;
+  vehicle: any;
 
   colors: ColorList[] = [];
   fuels: FuelList[] = [];
@@ -47,7 +48,7 @@ export class VehiclesFormComponent implements OnInit {
     private mutationsHandler: MutationsHandlerService
   ) {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.isNew = !!this.id;
+    this.isNew = !this.id;
     this.form = this.formBuilder.group({
       year: new FormControl(null, [Validators.min(1950), Validators.required]),
       colorId: new FormControl(null, [Validators.required]),
@@ -62,11 +63,12 @@ export class VehiclesFormComponent implements OnInit {
   }
 
   save() {
+    this.form.markAllAsTouched();
+
     const value = this.form.getRawValue();
-    console.log(value.color);
+    value.id = this.isNew ? NewId() : this.id;
     if (!this.isValidForm()) return;
     if (this.isNew) {
-      this.id = NewId();
       const mutation = Object.assign(new CreateVechicle(), value);
       this.mutationsHandler.handle(mutation).subscribe(
         (rs) => this.router.navigate(['vehicles']),

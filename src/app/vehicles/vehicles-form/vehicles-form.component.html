@@ -1,5 +1,10 @@
 <div class="row justify-content-center">
-    <div class="col-6">
+    <div class="col-md-8 col-sm-12">
+        <h3 class="title">
+            {{ !isNew && vehicle ? 'Edição' : '' }}
+            {{ !isNew && !vehicle ? 'Carregando...' : '' }}
+            {{ isNew ? 'Cadastro' : '' }}
+        </h3>
         <form [formGroup]="form" (submit)="save()">
             <div class="row justify-content-between">
                 <div class="form-group col-6">
@@ -35,6 +40,6 @@
                 </div>
             </div>
         </form>
-        <ngx-snackbar position="bottom-center" [max]="3"></ngx-snackbar>
+        <ngx-snackbar position="bottom-center" [max]="1"></ngx-snackbar>
     </div>
 </div>
