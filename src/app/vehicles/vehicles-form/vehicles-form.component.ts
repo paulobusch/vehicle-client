@@ -76,7 +76,6 @@ export class VehiclesFormComponent implements OnInit {
 
   setData(vehicle: VehicleDetail) {
     this.vehicle = vehicle;
-    if (!vehicle) return;
     this.form.patchValue(this.vehicle);
     this.fuelName = this.vehicle.fuelName;
     this.colorName = this.vehicle.colorName;
@@ -87,16 +86,17 @@ export class VehiclesFormComponent implements OnInit {
   save() {
     this.form.markAllAsTouched();
 
-    const value = this.form.getRawValue();
-    value.id = this.isNew ? NewId() : this.id;
     if (!this.isValidForm()) return;
+    const value = this.form.getRawValue();
     if (this.isNew) {
+      value.id = NewId();
       const mutation = Object.assign(new CreateVechicle(), value);
       this.mutationsHandler.handle(mutation).subscribe(
         (rs) => this.close(),
         () => this.snackService.open('Falha ao salvar veículo!')
       );
     } else {
+      value.id = this.id;
       const mutation = Object.assign(new UpdateVechicle(), value);
       this.mutationsHandler.handle(mutation).subscribe(
         (rs) => this.close(),

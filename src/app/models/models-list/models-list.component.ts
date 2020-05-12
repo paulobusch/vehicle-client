@@ -50,8 +50,8 @@ export class ModelsListComponent implements OnInit {
   }
 
   filter() {
-    const rawName = _.deburr(this.queryClient.name) as string;
-    this.modelsFiltred = this.models.filter(m => m.name.indexOf(rawName) !== -1);
+    const rawName = _.deburr(this.queryClient.name).toLowerCase() as string;
+    this.modelsFiltred = this.models.filter(m => m.name.toLowerCase().indexOf(rawName) !== -1);
     this.listState.totalRows = this.modelsFiltred.length;
     this.listState.noItems = this.modelsFiltred.length === 0;
   }

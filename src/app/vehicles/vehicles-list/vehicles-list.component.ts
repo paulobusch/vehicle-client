@@ -63,9 +63,9 @@ export class VehiclesListComponent implements OnInit {
   filter() {
     this.vehiclesFiltred = this.vehicles.filter(vehicle => {
       return (!this.query.year || vehicle.year === this.query.year)
-        && (!this.colorName || vehicle.colorName === this.colorName)
-        && (!this.brandName || vehicle.brandName === this.brandName)
-        && (!this.modelName || vehicle.modelName === this.modelName);
+        && (!this.colorName || vehicle.colorName.toLowerCase() === this.colorName.toLowerCase())
+        && (!this.brandName || vehicle.brandName.toLowerCase() === this.brandName.toLowerCase())
+        && (!this.modelName || vehicle.modelName.toLowerCase() === this.modelName.toLowerCase());
     });
     this.listState.totalRows = this.vehiclesFiltred.length;
     this.listState.noItems = this.vehiclesFiltred.length === 0;

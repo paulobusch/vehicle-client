@@ -1,1 +1,22 @@
-<p>models-form works!</p>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-sm-12">
+        <h3 class="title">
+            {{ isNew ? 'Cadastro de modelo' : '' }}
+            {{ !isNew && model ? 'Edição de modelo' : '' }}
+            {{ !isNew && !model ? 'Carregando...' : '' }}
+        </h3>
+        <form [formGroup]="form">
+            <div class="row justify-content-between">
+                <div class="form-group col-9">
+                    <input class="form-control" formControlName="name" [class.is-invalid]="!isValidField('name')">
+                    <div class="invalid-feedback">O nome é obrigatório</div>
+                </div>
+                <div class="col-3 actions">
+                    <button *ngIf="form.dirty" (click)="save()" class="btn btn-primary">Salvar</button>
+                    <button *ngIf="!form.dirty" (click)="close()" class="btn btn-primary">Fechar</button>
+                </div>
+            </div>
+        </form>
+        <ngx-snackbar position="bottom-center" max="3"></ngx-snackbar>
+    </div>
+</div>
