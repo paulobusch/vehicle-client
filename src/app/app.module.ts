@@ -23,6 +23,8 @@ import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.co
 import { HttpInterceptorProviders } from './shared/interceptors/provider-interceptor';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmDialogComponent } from './shared/modal/confirm-dialog/confirm-dialog.component';
+import { ModalService } from './shared/modal/modal.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReservationsFormComponent,
     LoginFormComponent,
     VehiclesFormComponent,
-    VehiclesListComponent
+    VehiclesListComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     FormsModule,
@@ -51,6 +54,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   providers: [
     AuthGuard,
     AuthService,
+    ModalService,
     MutationsHandlerService,
     QueriesHandlerService,
     HttpInterceptorProviders,

@@ -1,11 +1,16 @@
 <div class="row justify-content-center">
-    <div class="list col-md-8 col-sm-12">
+    <div class="list col-md-10 col-sm-12">
         <div class="filters">
             <div class="row justify-content-between">
+                <div  class="form-group col-1">
+                    <svg class="bi bi-plus-circle-fill pointer" style="color: green; margin-left: 5px" [routerLink]="['new']" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M16 8A8 8 0 110 8a8 8 0 0116 0zM8.5 4a.5.5 0 00-1 0v3.5H4a.5.5 0 000 1h3.5V12a.5.5 0 001 0V8.5H12a.5.5 0 000-1H8.5V4z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
                 <div class="form-group col-2">
                     <input type="number" class="form-control" (keyup.enter)="refresh()" [(ngModel)]="query.year" placeholder="Ano"/>
                 </div>
-                <div class="form-group col-3">
+                <div class="form-group col-2">
                     <input class="form-control" [typeahead]="colors" (keyup.enter)="refresh()" (typeaheadOnSelect)="query.colorId=$event.item.id; refresh()" [(ngModel)]="colorName" typeaheadOptionField="name" placeholder="Cor"/>
                 </div>
                 <div class="form-group col-3">
@@ -33,14 +38,20 @@
                 <th>Marca</th>
                 <th>Model</th>
                 <th>Combustível</th>
+                <th>Ação</th>
             </thead>
             <tbody>
-                <tr *ngFor="let vehicle of vehicles" [routerLink]="['edit', vehicle.id]">
-                    <td>{{ vehicle.year }}</td>
-                    <td>{{ vehicle.colorName }}</td>
-                    <td>{{ vehicle.brandName }}</td>
-                    <td>{{ vehicle.modelName }}</td>
-                    <td>{{ vehicle.fuelName }}</td>
+                <tr *ngFor="let vehicle of vehicles">
+                    <td (click)="open(vehicle.id)">{{ vehicle.year }}</td>
+                    <td (click)="open(vehicle.id)">{{ vehicle.colorName }}</td>
+                    <td (click)="open(vehicle.id)">{{ vehicle.brandName }}</td>
+                    <td (click)="open(vehicle.id)">{{ vehicle.modelName }}</td>
+                    <td (click)="open(vehicle.id)">{{ vehicle.fuelName }}</td>
+                    <td>
+                        <svg class="bi bi-trash-fill" (click)="remove(vehicle.id)" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M2.5 1a1 1 0 00-1 1v1a1 1 0 001 1H3v9a2 2 0 002 2h6a2 2 0 002-2V4h.5a1 1 0 001-1V2a1 1 0 00-1-1H10a1 1 0 00-1-1H7a1 1 0 00-1 1H2.5zm3 4a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7a.5.5 0 01.5-.5zM8 5a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7A.5.5 0 018 5zm3 .5a.5.5 0 00-1 0v7a.5.5 0 001 0v-7z" clip-rule="evenodd"/>
+                        </svg>
+                    </td>
                 </tr>
             </tbody>
         </table>

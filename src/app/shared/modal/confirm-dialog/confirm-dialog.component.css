@@ -1,0 +1,12 @@
+.modal-confirm div {
+    vertical-align: middle;
+}
+
+.modal-confirm .body {
+    vertical-align: middle;
+    min-height: 50px;
+} 
+
+.modal-confirm .actions button {
+    margin: 0 5px;
+}

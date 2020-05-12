@@ -2,3 +2,12 @@
 @import '~ngx-snackbar/bundles/style.css';
 
 .pointer { cursor: pointer; }
+.modal-app { 
+    top: 30%;
+    padding: 15px; 
+    border-radius: 5px;
+    vertical-align:middle;
+    background-color: white; 
+}
+
+.modal-app>div { border: none; }

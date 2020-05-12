@@ -13,6 +13,9 @@ import { ListFuels } from '../queries/list-fuels';
 import { ListModels } from '../queries/list-models';
 import { ListBrands } from '../queries/list-brands';
 import { ListState } from 'src/app/shared/metadata/list-state';
+import { DeleteVehicle } from '../mutations/delete-vehicle';
+import { Router } from '@angular/router';
+import { ModalService } from 'src/app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-vehicles-list',
@@ -36,6 +39,8 @@ export class VehiclesListComponent implements OnInit {
   listState: ListState = new ListState();
 
   constructor(
+    private router: Router,
+    private modalService: ModalService,
     private snackbarService: SnackbarService,
     private queriesHandler: QueriesHandlerService
   ) { }
@@ -54,6 +59,24 @@ export class VehiclesListComponent implements OnInit {
       },
       () => this.snackbarService.add({ msg: 'Erro ao listar veículos!', timeout: 3000 })
     );
+  }
+
+  open(id: string) {
+    this.router.navigate(['vehicles', 'edit', id]);
+  }
+
+  remove(id: string) {
+    this.modalService.confirmRemove('Tem certeza que deseja remover o veículo?').subscribe(confirm => {
+      if (!confirm) return;
+      const mutation = new DeleteVehicle(id);
+      this.queriesHandler.handle(mutation).subscribe(
+        (rs) => {
+          this.vehicles = this.vehicles.filter(v => v.id !== id);
+          this.snackbarService.add({ msg: 'Veículo removido com sucesso', timeout: 3000 });
+        },
+        () => this.snackbarService.add({ msg: 'Falha ao remove veículo!', timeout: 3000 })
+      );
+    });
   }
 
   loadSelects() {
