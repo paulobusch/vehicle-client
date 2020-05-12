@@ -1,0 +1,35 @@
+.list {
+    margin-top: 25px;
+}
+
+.list .feedback {
+    text-align: center;
+    font-size: 15pt;
+}
+
+table {
+    display: block;
+    max-height: calc(95vh - 150px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+table thead th {
+    background-color: white;
+    position: sticky;
+    top: 0;
+}
+
+table tbody td {
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+table tr td:last-child {
+    color: red;
+    text-align: center;
+}
+
+table thead {
+    width: 100%;
+}

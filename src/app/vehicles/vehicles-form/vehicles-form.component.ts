@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ColorList } from '../queries/view-models/color-list';
 import { FuelList } from '../queries/view-models/fuel-list';
-import { ModelList } from '../queries/view-models/model-list';
+import { ModelList } from '../../models/queries/view-models/model-list';
 import { BrandList } from '../queries/view-models/brand-list';
 import { QueriesHandlerService } from 'src/app/shared/handlers/query-handler-service';
 import { ListColors } from '../queries/list-colors';
 import {SnackbarService} from 'ngx-snackbar';
 import { ListFuels } from '../queries/list-fuels';
-import { ListModels } from '../queries/list-models';
+import { ListModels } from '../../models/queries/list-models';
 import { ListBrands } from '../queries/list-brands';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';

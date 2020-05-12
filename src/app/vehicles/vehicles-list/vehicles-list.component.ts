@@ -7,10 +7,10 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ColorList } from '../queries/view-models/color-list';
 import { ListColors } from '../queries/list-colors';
 import { FuelList } from '../queries/view-models/fuel-list';
-import { ModelList } from '../queries/view-models/model-list';
+import { ModelList } from '../../models/queries/view-models/model-list';
 import { BrandList } from '../queries/view-models/brand-list';
 import { ListFuels } from '../queries/list-fuels';
-import { ListModels } from '../queries/list-models';
+import { ListModels } from '../../models/queries/list-models';
 import { ListBrands } from '../queries/list-brands';
 import { ListState } from 'src/app/shared/metadata/list-state';
 import { DeleteVehicle } from '../mutations/delete-vehicle';
@@ -74,7 +74,7 @@ export class VehiclesListComponent implements OnInit {
           this.vehicles = this.vehicles.filter(v => v.id !== id);
           this.snackbarService.add({ msg: 'Veículo removido com sucesso', timeout: 3000 });
         },
-        () => this.snackbarService.add({ msg: 'Falha ao remove veículo!', timeout: 3000 })
+        () => this.snackbarService.add({ msg: 'Falha ao remover veículo!', timeout: 3000 })
       );
     });
   }
