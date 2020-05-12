@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ModelList } from 'src/app/models/queries/view-models/model-list';
 import { ListModels } from 'src/app/models/queries/list-models';
 import { QueriesHandlerService } from 'src/app/shared/handlers/query-handler-service';
-import { SnackbarService } from 'ngx-snackbar';
 import { ModalService } from 'src/app/shared/modal/modal.service';
 import { Router } from '@angular/router';
 import { ListState } from 'src/app/shared/metadata/list-state';
 import * as _ from 'lodash';
 import { DeleteModel } from '../mutations/delete-model';
+import { SnackService } from 'src/app/shared/services/snack-service';
 
 @Component({
   selector: 'app-models-list',
@@ -17,7 +17,7 @@ import { DeleteModel } from '../mutations/delete-model';
 export class ModelsListComponent implements OnInit {
 
   models: ModelList[] = [];
-  filtredModels: ModelList[] = [];
+  modelsFiltred: ModelList[] = [];
 
   listState: ListState = new ListState();
   query: ListModels = new ListModels();
@@ -28,7 +28,7 @@ export class ModelsListComponent implements OnInit {
   constructor(
     private router: Router,
     private modalService: ModalService,
-    private snackbarService: SnackbarService,
+    private snackService: SnackService,
     private queriesHandler: QueriesHandlerService,
   ) { }
 
@@ -42,18 +42,18 @@ export class ModelsListComponent implements OnInit {
     this.queriesHandler.handle(query).subscribe(
       (rs) => {
         this.models = rs.data;
-        this.filtredModels = rs.data;
+        this.modelsFiltred = rs.data;
         this.listState.loaded(rs);
       },
-      () => this.snackbarService.add({ msg: 'Falha ao listar modelos!', timeout: 3000 })
+      () => this.snackService.open('Falha ao listar modelos!')
     );
   }
 
   filter() {
     const rawName = _.deburr(this.queryClient.name) as string;
-    this.filtredModels = this.models.filter(m => m.name.indexOf(rawName) !== -1);
-    this.listState.totalRows = this.filtredModels.length;
-    this.listState.noItems = this.filtredModels.length === 0;
+    this.modelsFiltred = this.models.filter(m => m.name.indexOf(rawName) !== -1);
+    this.listState.totalRows = this.modelsFiltred.length;
+    this.listState.noItems = this.modelsFiltred.length === 0;
   }
 
   open(id: string) {
@@ -67,10 +67,10 @@ export class ModelsListComponent implements OnInit {
       this.queriesHandler.handle(mutation).subscribe(
         (rs) => {
           this.models = this.models.filter(v => v.id !== id);
-          this.filtredModels = this.filtredModels.filter(v => v.id !== id);
-          this.snackbarService.add({ msg: 'Modelo removido com sucesso', timeout: 3000 });
+          this.modelsFiltred = this.modelsFiltred.filter(v => v.id !== id);
+          this.snackService.open('Modelo removido com sucesso');
         },
-        () => this.snackbarService.add({ msg: 'Falha ao remover modelo!', timeout: 3000 })
+        () => this.snackService.open('Falha ao remover modelo!')
       );
     });
   }

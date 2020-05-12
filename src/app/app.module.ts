@@ -5,7 +5,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
-import { SnackbarModule } from 'ngx-snackbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AnnouncementsListComponent } from './announcements/announcements-list/announcements-list.component';
@@ -27,6 +26,8 @@ import { ConfirmDialogComponent } from './shared/modal/confirm-dialog/confirm-di
 import { ModalService } from './shared/modal/modal.service';
 import { ModelsListComponent } from './models/models-list/models-list.component';
 import { ModelsFormComponent } from './models/models-form/models-form.component';
+import { SnackbarModule } from 'ngx-snackbar';
+import { SnackService } from './shared/services/snack-service';
 
 @NgModule({
   declarations: [
@@ -49,16 +50,17 @@ import { ModelsFormComponent } from './models/models-form/models-form.component'
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    SnackbarModule.forRoot(),
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    SnackbarModule.forRoot(),
     TypeaheadModule.forRoot()
   ],
   providers: [
     AuthGuard,
     AuthService,
     ModalService,
+    SnackService,
     MutationsHandlerService,
     QueriesHandlerService,
     HttpInterceptorProviders,

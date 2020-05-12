@@ -2,20 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { VehicleList } from '../queries/view-models/vehicle-list';
 import { ListVehicles } from '../queries/list-vehicles';
 import { QueriesHandlerService } from 'src/app/shared/handlers/query-handler-service';
-import { SnackbarService } from 'ngx-snackbar';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ColorList } from '../queries/view-models/color-list';
-import { ListColors } from '../queries/list-colors';
-import { FuelList } from '../queries/view-models/fuel-list';
 import { ModelList } from '../../models/queries/view-models/model-list';
 import { BrandList } from '../queries/view-models/brand-list';
-import { ListFuels } from '../queries/list-fuels';
 import { ListModels } from '../../models/queries/list-models';
 import { ListBrands } from '../queries/list-brands';
 import { ListState } from 'src/app/shared/metadata/list-state';
 import { DeleteVehicle } from '../mutations/delete-vehicle';
 import { Router } from '@angular/router';
 import { ModalService } from 'src/app/shared/modal/modal.service';
+import { ListColors } from '../queries/list-colors';
+import { SnackService } from 'src/app/shared/services/snack-service';
 
 @Component({
   selector: 'app-vehicles-list',
@@ -27,6 +24,7 @@ export class VehiclesListComponent implements OnInit {
   query: ListVehicles = new ListVehicles();
 
   vehicles: VehicleList[] = [];
+  vehiclesFiltred: VehicleList[] = [];
 
   colors: ColorList[] = [];
   models: ModelList[] = [];
@@ -41,7 +39,7 @@ export class VehiclesListComponent implements OnInit {
   constructor(
     private router: Router,
     private modalService: ModalService,
-    private snackbarService: SnackbarService,
+    private snackService: SnackService,
     private queriesHandler: QueriesHandlerService
   ) { }
 
@@ -55,10 +53,22 @@ export class VehiclesListComponent implements OnInit {
     this.queriesHandler.handle(this.query).subscribe(
       (rs) => {
         this.vehicles = rs.data;
+        this.vehiclesFiltred = rs.data;
         this.listState.loaded(rs);
       },
-      () => this.snackbarService.add({ msg: 'Erro ao listar veículos!', timeout: 3000 })
+      () => this.snackService.open('Erro ao listar veículos!')
     );
+  }
+
+  filter() {
+    this.vehiclesFiltred = this.vehicles.filter(vehicle => {
+      return (!this.query.year || vehicle.year === this.query.year)
+        && (!this.colorName || vehicle.colorName === this.colorName)
+        && (!this.brandName || vehicle.brandName === this.brandName)
+        && (!this.modelName || vehicle.modelName === this.modelName);
+    });
+    this.listState.totalRows = this.vehiclesFiltred.length;
+    this.listState.noItems = this.vehiclesFiltred.length === 0;
   }
 
   open(id: string) {
@@ -71,10 +81,11 @@ export class VehiclesListComponent implements OnInit {
       const mutation = new DeleteVehicle(id);
       this.queriesHandler.handle(mutation).subscribe(
         (rs) => {
+          this.vehiclesFiltred = this.vehiclesFiltred.filter(v => v.id !== id);
           this.vehicles = this.vehicles.filter(v => v.id !== id);
-          this.snackbarService.add({ msg: 'Veículo removido com sucesso', timeout: 3000 });
+          this.snackService.open('Veículo removido com sucesso');
         },
-        () => this.snackbarService.add({ msg: 'Falha ao remover veículo!', timeout: 3000 })
+        () => this.snackService.open('Falha ao remover veículo!')
       );
     });
   }
@@ -83,16 +94,16 @@ export class VehiclesListComponent implements OnInit {
     const listColors = new ListColors();
     this.queriesHandler.handle(listColors).subscribe(
       (rs) => this.colors = rs.data,
-      ()  => this.snackbarService.add({ msg: 'Falha ao carregar cores!', timeout: 3000 }));
+      ()  => this.snackService.open('Falha ao carregar cores!'));
 
     const listModels = new ListModels();
     this.queriesHandler.handle(listModels).subscribe(
       (rs) => this.models = rs.data,
-      ()  => this.snackbarService.add({ msg: 'Falha ao carregar modelos de veículos!', timeout: 3000 }));
+      ()  => this.snackService.open('Falha ao carregar modelos de veículos!'));
 
     const listBrands = new ListBrands();
     this.queriesHandler.handle(listBrands).subscribe(
       (rs) => this.brands = rs.data,
-      ()  => this.snackbarService.add({ msg: 'Falha ao carregar marcas de veículos!', timeout: 3000 }));
+      ()  => this.snackService.open('Falha ao carregar marcas de veículos!'));
   }
 }

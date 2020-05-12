@@ -29,7 +29,7 @@
                 <th>Remover</th>
             </thead>
             <tbody>
-                <tr *ngFor="let model of filtredModels">
+                <tr *ngFor="let model of modelsFiltred">
                     <td (click)="open(model.id)">{{ model.name }}</td>
                     <td>
                         <svg class="bi bi-trash-fill" (click)="remove(model.id)" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -41,4 +41,4 @@
         </table>
     </div>
 </div>
-<ngx-snackbar position="bottom-center" [max]="1"></ngx-snackbar>
+<ngx-snackbar position="bottom-center" max="3"></ngx-snackbar>

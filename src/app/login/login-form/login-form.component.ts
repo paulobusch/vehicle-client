@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handler-service';
 import { LoginUser } from '../mutations/login-user';
 import { Router } from '@angular/router';
-import {SnackbarService} from 'ngx-snackbar';
+import { SnackService } from 'src/app/shared/services/snack-service';
 
 @Component({
   selector: 'app-login-form',
@@ -16,7 +16,7 @@ export class LoginFormComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private snackbarService: SnackbarService,
+    private snackService: SnackService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
   ) {
@@ -38,7 +38,7 @@ export class LoginFormComponent implements OnInit {
 
   validForm(): boolean {
     if (this.form.invalid) {
-      this.snackbarService.add({ msg: 'Existem campos inválidos!', timeout: 3000 });
+      this.snackService.open('Existem campos inválidos!');
       return false;
     }
     return true;

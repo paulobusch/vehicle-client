@@ -5,7 +5,6 @@ import { ModelList } from '../../models/queries/view-models/model-list';
 import { BrandList } from '../queries/view-models/brand-list';
 import { QueriesHandlerService } from 'src/app/shared/handlers/query-handler-service';
 import { ListColors } from '../queries/list-colors';
-import {SnackbarService} from 'ngx-snackbar';
 import { ListFuels } from '../queries/list-fuels';
 import { ListModels } from '../../models/queries/list-models';
 import { ListBrands } from '../queries/list-brands';
@@ -18,6 +17,7 @@ import { UpdateVechicle } from '../mutations/update-vehicle';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/ngx-bootstrap-typeahead';
 import { GetVehicle } from '../queries/get-vehicle';
 import { VehicleDetail } from '../queries/view-models/vehicle-detail';
+import { SnackService } from 'src/app/shared/services/snack-service';
 
 @Component({
   selector: 'app-vehicles-form',
@@ -45,7 +45,7 @@ export class VehiclesFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private snackbarService: SnackbarService,
+    private snackService: SnackService,
     private queriesHandler: QueriesHandlerService,
     private mutationsHandler: MutationsHandlerService
   ) {
@@ -70,7 +70,7 @@ export class VehiclesFormComponent implements OnInit {
     const query = new GetVehicle(this.id);
     this.queriesHandler.handle(query).subscribe(
       (rs) => this.setData(rs.data),
-      (err) => this.snackbarService.add({ msg: 'Falha ao carregar veículo!', timeout: 3000 })
+      (err) => this.snackService.open('Falha ao carregar veículo!')
     );
   }
 
@@ -94,13 +94,13 @@ export class VehiclesFormComponent implements OnInit {
       const mutation = Object.assign(new CreateVechicle(), value);
       this.mutationsHandler.handle(mutation).subscribe(
         (rs) => this.close(),
-        () => this.snackbarService.add({ msg: 'Falha ao salvar veículo!', timeout: 3000 })
+        () => this.snackService.open('Falha ao salvar veículo!')
       );
     } else {
       const mutation = Object.assign(new UpdateVechicle(), value);
       this.mutationsHandler.handle(mutation).subscribe(
         (rs) => this.close(),
-        () => this.snackbarService.add({ msg: 'Falha ao atualizar veículo!', timeout: 3000 })
+        () => this.snackService.open('Falha ao atualizar veículo!')
       );
     }
   }
@@ -117,7 +117,7 @@ export class VehiclesFormComponent implements OnInit {
 
   isValidForm(): boolean {
     if (!this.form.valid) {
-      this.snackbarService.add({ msg: 'Existem campos inválidos!', timeout: 3000 });
+      this.snackService.open('Existem campos inválidos!');
       return false;
     }
     return true;
@@ -132,21 +132,21 @@ export class VehiclesFormComponent implements OnInit {
     const listColors = new ListColors();
     this.queriesHandler.handle(listColors).subscribe(
       (rs) => this.colors = rs.data,
-      ()  => this.snackbarService.add({ msg: 'Falha ao carregar cores!', timeout: 3000 }));
+      ()  => this.snackService.open('Falha ao carregar cores!'));
 
     const listFuels = new ListFuels();
     this.queriesHandler.handle(listFuels).subscribe(
       (rs) => this.fuels = rs.data,
-      ()  => this.snackbarService.add({ msg: 'Falha ao carregar combustíveis!', timeout: 3000 }));
+      ()  => this.snackService.open('Falha ao carregar combustíveis!'));
 
     const listModels = new ListModels();
     this.queriesHandler.handle(listModels).subscribe(
       (rs) => this.models = rs.data,
-      ()  => this.snackbarService.add({ msg: 'Falha ao carregar modelos de veículos!', timeout: 3000 }));
+      ()  => this.snackService.open('Falha ao carregar modelos de veículos!'));
 
     const listBrands = new ListBrands();
     this.queriesHandler.handle(listBrands).subscribe(
       (rs) => this.brands = rs.data,
-      ()  => this.snackbarService.add({ msg: 'Falha ao carregar marcas de veículos!', timeout: 3000 }));
+      ()  => this.snackService.open('Falha ao carregar marcas de veículos!'));
   }
 }

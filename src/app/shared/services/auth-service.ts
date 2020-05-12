@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { LoginUser } from 'src/app/login/mutations/login-user';
 import { User } from 'src/app/login/mutations/view-models/user-result';
 import { MutationsHandlerService } from '../handlers/mutation-handler-service';
-import {SnackbarService} from 'ngx-snackbar';
 import { LoginResult } from 'src/app/login/mutations/view-models/login-result';
 import { BehaviorSubject } from 'rxjs';
+import { SnackService } from './snack-service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class AuthService {
 
     constructor(
         private router: Router,
-        private snackbarService: SnackbarService,
+        private snackService: SnackService,
         private mutationsHandler: MutationsHandlerService
     ) {
         const item = localStorage.getItem('user');
@@ -37,7 +37,7 @@ export class AuthService {
             this.router.navigate(['announcements']);
             this.currentUser.next(user);
         }, err => {
-            this.snackbarService.add({ msg: 'Usuário ou senha inválidos', timeout: 3000 });
+            this.snackService.open('Usuário ou senha inválidos');
         });
     }
 

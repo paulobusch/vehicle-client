@@ -8,19 +8,19 @@
                     </svg>
                 </div>
                 <div class="form-group col-2">
-                    <input type="number" class="form-control" (keyup.enter)="refresh()" [(ngModel)]="query.year" placeholder="Ano"/>
+                    <input type="number" class="form-control" (keyup.enter)="filter()" [(ngModel)]="query.year" placeholder="Ano"/>
                 </div>
                 <div class="form-group col-2">
-                    <input class="form-control" [typeahead]="colors" (keyup.enter)="refresh()" (typeaheadOnSelect)="query.colorId=$event.item.id; refresh()" [(ngModel)]="colorName" typeaheadOptionField="name" placeholder="Cor"/>
+                    <input class="form-control" [typeahead]="colors" (keyup.enter)="filter()" (typeaheadOnSelect)="query.colorId=$event.item.id; filter()" [(ngModel)]="colorName" typeaheadOptionField="name" placeholder="Cor"/>
                 </div>
                 <div class="form-group col-3">
-                    <input class="form-control" [typeahead]="brands" (keyup.enter)="refresh()" (typeaheadOnSelect)="query.brandId=$event.item.id; refresh()" [(ngModel)]="brandName" typeaheadOptionField="name" placeholder="Marca"/>
+                    <input class="form-control" [typeahead]="brands" (keyup.enter)="filter()" (typeaheadOnSelect)="query.brandId=$event.item.id; filter()" [(ngModel)]="brandName" typeaheadOptionField="name" placeholder="Marca"/>
                 </div>
                 <div class="form-group col-3">
-                    <input class="form-control" [typeahead]="models" (keyup.enter)="refresh()" (typeaheadOnSelect)="query.modelId=$event.item.id; refresh()" [(ngModel)]="modelName" typeaheadOptionField="name" placeholder="Modelo"/>
+                    <input class="form-control" [typeahead]="models" (keyup.enter)="filter()" (typeaheadOnSelect)="query.modelId=$event.item.id; filter()" [(ngModel)]="modelName" typeaheadOptionField="name" placeholder="Modelo"/>
                 </div>
                 <div  class="form-group col-1">
-                    <svg class="bi bi-search pointer" (click)="refresh()" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="bi bi-search pointer" (click)="filter()" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
                         <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
                     </svg>
@@ -41,7 +41,7 @@
                 <th>Remover</th>
             </thead>
             <tbody>
-                <tr *ngFor="let vehicle of vehicles">
+                <tr *ngFor="let vehicle of vehiclesFiltred">
                     <td (click)="open(vehicle.id)">{{ vehicle.year }}</td>
                     <td (click)="open(vehicle.id)">{{ vehicle.colorName }}</td>
                     <td (click)="open(vehicle.id)">{{ vehicle.brandName }}</td>
@@ -57,4 +57,4 @@
         </table>
     </div>
 </div>
-<ngx-snackbar position="bottom-center" [max]="1"></ngx-snackbar>
+<ngx-snackbar position="bottom-center" max="3"></ngx-snackbar>
