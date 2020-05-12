@@ -28,6 +28,8 @@ import { ModelsListComponent } from './models/models-list/models-list.component'
 import { ModelsFormComponent } from './models/models-form/models-form.component';
 import { SnackbarModule } from 'ngx-snackbar';
 import { SnackService } from './shared/services/snack-service';
+import { BrandsListComponent } from './brands/brands-list/brands-list.component';
+import { BrandsFormComponent } from './brands/brands-form/brands-form.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { SnackService } from './shared/services/snack-service';
     VehiclesListComponent,
     ConfirmDialogComponent,
     ModelsListComponent,
-    ModelsFormComponent
+    ModelsFormComponent,
+    BrandsListComponent,
+    BrandsFormComponent
   ],
   imports: [
     FormsModule,

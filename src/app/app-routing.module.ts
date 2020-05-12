@@ -8,6 +8,8 @@ import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.co
 import { VehiclesFormComponent } from './vehicles/vehicles-form/vehicles-form.component';
 import { ModelsListComponent } from './models/models-list/models-list.component';
 import { ModelsFormComponent } from './models/models-form/models-form.component';
+import { BrandsListComponent } from './brands/brands-list/brands-list.component';
+import { BrandsFormComponent } from './brands/brands-form/brands-form.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'announcements' },
@@ -20,6 +22,9 @@ const routes: Routes = [
   { path: 'models', canActivate: [AuthGuard], component: ModelsListComponent },
   { path: 'models/new', canActivate: [AuthGuard], component: ModelsFormComponent },
   { path: 'models/edit/:id', canActivate: [AuthGuard], component: ModelsFormComponent },
+  { path: 'brands', canActivate: [AuthGuard], component: BrandsListComponent },
+  { path: 'brands/new', canActivate: [AuthGuard], component: BrandsFormComponent },
+  { path: 'brands/edit/:id', canActivate: [AuthGuard], component: BrandsFormComponent },
 ];
 
 @NgModule({
