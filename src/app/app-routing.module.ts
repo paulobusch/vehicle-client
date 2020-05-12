@@ -6,6 +6,8 @@ import { AuthGuard } from './shared/guards/auth-guard';
 import { LoginFormComponent } from './login/login-form/login-form.component';
 import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.component';
 import { VehiclesFormComponent } from './vehicles/vehicles-form/vehicles-form.component';
+import { ModelsListComponent } from './models/models-list/models-list.component';
+import { ModelsFormComponent } from './models/models-form/models-form.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'announcements' },
@@ -15,6 +17,9 @@ const routes: Routes = [
   { path: 'vehicles', canActivate: [AuthGuard], component: VehiclesListComponent },
   { path: 'vehicles/new', canActivate: [AuthGuard], component: VehiclesFormComponent },
   { path: 'vehicles/edit/:id', canActivate: [AuthGuard], component: VehiclesFormComponent },
+  { path: 'models', canActivate: [AuthGuard], component: ModelsListComponent },
+  { path: 'models/new', canActivate: [AuthGuard], component: ModelsFormComponent },
+  { path: 'models/edit/:id', canActivate: [AuthGuard], component: ModelsFormComponent },
 ];
 
 @NgModule({

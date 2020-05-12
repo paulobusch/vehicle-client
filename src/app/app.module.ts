@@ -25,6 +25,8 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmDialogComponent } from './shared/modal/confirm-dialog/confirm-dialog.component';
 import { ModalService } from './shared/modal/modal.service';
+import { ModelsListComponent } from './models/models-list/models-list.component';
+import { ModelsFormComponent } from './models/models-form/models-form.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { ModalService } from './shared/modal/modal.service';
     LoginFormComponent,
     VehiclesFormComponent,
     VehiclesListComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ModelsListComponent,
+    ModelsFormComponent
   ],
   imports: [
     FormsModule,

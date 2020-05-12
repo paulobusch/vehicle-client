@@ -36,8 +36,8 @@
                     <div class="invalid-feedback">O campo marca deve ser informado!</div>
                 </div>
                 <div class="col-3">
-                    <button type="submit" *ngIf="isNew || form.dirty" (click)="save()" class="btn btn-primary">Salvar</button>
-                    <button type="submit" *ngIf="!isNew && !form.dirty" (click)="close()" class="btn btn-primary">Fechar</button>
+                    <button type="submit" *ngIf="form.dirty" (click)="save()" class="btn btn-primary">Salvar</button>
+                    <button type="submit" *ngIf="!form.dirty" (click)="close()" class="btn btn-primary">Fechar</button>
                 </div>
             </div>
         </form>
