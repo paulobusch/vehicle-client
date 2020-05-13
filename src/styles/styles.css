@@ -1,6 +1,14 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~ngx-snackbar/bundles/style.css';
 
+body { 
+    background-color: rgb(223, 237, 255);
+}
+
+table {
+    background-color: white;
+}
+
 .pointer { cursor: pointer; }
 .modal-app { 
     top: 30%;
