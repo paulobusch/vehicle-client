@@ -10,6 +10,9 @@ import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handle
 import { NewId } from 'src/app/shared/random/new-id';
 import { CreateModel } from '../mutations/create-model';
 import { UpdateModel } from '../mutations/update-model';
+import { IMutationResult } from 'src/app/shared/handlers/results/mutation-result';
+import { HttpErrorResponse } from '@angular/common/http';
+import { EStatusCode } from 'src/app/shared/handlers/enums/status-code';
 
 @Component({
   selector: 'app-models-form',
@@ -65,14 +68,26 @@ export class ModelsFormComponent implements OnInit {
       const mutation = Object.assign(new CreateModel(), value);
       this.mutationsHandler.handle(mutation).subscribe(
         (rs) => this.close(),
-        () => this.snackService.open('Falha ao salvar modelo!')
+        (err: HttpErrorResponse) => {
+          const result = err.error as IMutationResult;
+          const msgDuplicateName = 'Model with Name already exists';
+          if (err.status === EStatusCode.conflict && result.message.indexOf(msgDuplicateName) !== -1)
+            return this.snackService.open('Já existe um modelo com este nome!');
+          this.snackService.open('Falha ao salvar modelo!');
+        }
       );
     } else {
       value.id = this.id;
       const mutation = Object.assign(new UpdateModel(), value);
       this.mutationsHandler.handle(mutation).subscribe(
         (rs) => this.close(),
-        () => this.snackService.open('Falha ao salvar modelo!')
+        (err: HttpErrorResponse) => {
+          const result = err.error as IMutationResult;
+          const msgDuplicateName = 'Model with Name already exists';
+          if (err.status === EStatusCode.conflict && result.message.indexOf(msgDuplicateName) !== -1)
+            return this.snackService.open('Já existe um modelo com este nome!');
+          this.snackService.open('Falha ao atualizar modelo!');
+        }
       );
     }
   }
