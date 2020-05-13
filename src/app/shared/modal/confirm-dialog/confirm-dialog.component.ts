@@ -8,7 +8,11 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
   styleUrls: ['./confirm-dialog.component.css']
 })
 export class ConfirmDialogComponent implements OnInit {
+  public title: string;
   public message: string;
+  public confirmCritial: boolean;
+  public btnConfirm = 'CONFIRMAR';
+  public btnCancel = 'CANCELAR';
   public onClose: Subject<boolean>;
 
   constructor(

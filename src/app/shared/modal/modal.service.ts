@@ -13,7 +13,13 @@ export class ModalService {
   ) { }
 
   confirmRemove(message: string): Observable<boolean> {
-    const modal = this.modalService.show(ConfirmDialogComponent, { class: 'modal-app', initialState: { message } });
+    const data = { title: 'Remover Registro', message, btnConfirm: 'REMOVER', confirmCritial: true };
+    const modal = this.modalService.show(ConfirmDialogComponent, { class: 'modal-app', initialState: data });
+    return modal.content.onClose.asObservable();
+  }
+
+  confirmInformation(title: string, message: string, confirmCritial: boolean = false): Observable<boolean> {
+    const modal = this.modalService.show(ConfirmDialogComponent, { class: 'modal-app', initialState: { title, message, confirmCritial } });
     return modal.content.onClose.asObservable();
   }
 }
