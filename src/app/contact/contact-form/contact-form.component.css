@@ -1,0 +1,5 @@
+.contact {
+    margin-top: 10px;
+}
+
+.contact div span:nth-child(1) { text-align: end; }

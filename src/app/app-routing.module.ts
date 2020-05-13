@@ -10,6 +10,7 @@ import { ModelsListComponent } from './models/models-list/models-list.component'
 import { ModelsFormComponent } from './models/models-form/models-form.component';
 import { BrandsListComponent } from './brands/brands-list/brands-list.component';
 import { BrandsFormComponent } from './brands/brands-form/brands-form.component';
+import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'announcements' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'brands', canActivate: [AuthGuard], component: BrandsListComponent },
   { path: 'brands/new', canActivate: [AuthGuard], component: BrandsFormComponent },
   { path: 'brands/edit/:id', canActivate: [AuthGuard], component: BrandsFormComponent },
+  { path: 'contact', canActivate: [AuthGuard], component: ContactFormComponent },
 ];
 
 @NgModule({

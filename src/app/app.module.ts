@@ -30,6 +30,7 @@ import { SnackbarModule } from 'ngx-snackbar';
 import { SnackService } from './shared/services/snack-service';
 import { BrandsListComponent } from './brands/brands-list/brands-list.component';
 import { BrandsFormComponent } from './brands/brands-form/brands-form.component';
+import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { BrandsFormComponent } from './brands/brands-form/brands-form.component'
     ModelsListComponent,
     ModelsFormComponent,
     BrandsListComponent,
-    BrandsFormComponent
+    BrandsFormComponent,
+    ContactFormComponent
   ],
   imports: [
     FormsModule,
