@@ -1,0 +1,33 @@
+<div class="row justify-content-center">
+    <div class="col-md-8 col-sm-12">
+        <h3 class="title">
+            {{ !isNew && !reservation ? 'Carregando...': '' }}
+            {{ !isNew && reservation ? 'Edição de reserva': '' }}
+            {{ isNew ? 'Criação de reserva': '' }}
+        </h3>
+        <form [formGroup]="form">
+            <div class="row justify-content-between">
+                <div class="form-group col-6">
+                    <input type="text" class="form-control" formControlName="contactName" placeholder="Cliente" [class.is-invalid]="!isValidField('contactName')">
+                    <div class="invalid-feedback">O campo contato é obrigatório</div> 
+                </div>
+                <div class="form-group col-6">
+                    <input type="text" class="form-control" formControlName="contactPhone" placeholder="Telefone" mask="(00) 00000-0000" [class.is-invalid]="!isValidField('contactPhone')">
+                    <div class="invalid-feedback">O campo telefone deve ser válido</div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="form-group col-8">
+                    <input type="text" class="form-control" [(ngModel)]="announcementName" typeaheadOptionField="name"  [typeahead]="announcements" 
+                        (typeaheadOnSelect)="onSelect($event.item.id, 'announcementId')" [ngModelOptions]="{standalone: true}" [class.is-invalid]="!isValidField('announcementId')" placeholder="Anúncio">
+                    <div class="invalid-feedback">O campo Anúncio é obrigatório</div>
+                </div>
+                <div class="col-4 actions">
+                    <button type="button" class="btn btn-primary" *ngIf="form.dirty" (click)="save()">Salvar</button>
+                    <button type="button" class="btn btn-primary" *ngIf="!form.dirty" (click)="close()">Fechar</button>
+                </div>
+            </div>
+        </form>
+        <ngx-snackbar position="bottom-center" max="3"></ngx-snackbar>
+    </div>
+</div>

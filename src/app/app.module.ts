@@ -31,6 +31,7 @@ import { SnackService } from './shared/services/snack-service';
 import { BrandsListComponent } from './brands/brands-list/brands-list.component';
 import { BrandsFormComponent } from './brands/brands-form/brands-form.component';
 import { ContactFormComponent } from './contact/contact-form/contact-form.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { ContactFormComponent } from './contact/contact-form/contact-form.compon
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    TypeaheadModule.forRoot()
+    TypeaheadModule.forRoot(),
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     AuthGuard,
