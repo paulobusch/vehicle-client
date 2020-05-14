@@ -12,11 +12,14 @@ import { BrandsListComponent } from './brands/brands-list/brands-list.component'
 import { BrandsFormComponent } from './brands/brands-form/brands-form.component';
 import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 import { ReservationsFormComponent } from './reservations/reservations-form/reservations-form.component';
+import { AnnouncementsFormComponent } from './announcements/announcements-form/announcements-form.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'announcements' },
   { path: 'login', component: LoginFormComponent },
   { path: 'announcements', component: AnnouncementsListComponent },
+  { path: 'announcements/new', component: AnnouncementsFormComponent },
+  { path: 'announcements/edit/:id', component: AnnouncementsFormComponent },
   { path: 'reservations', canActivate: [AuthGuard], component: ReservationsListComponent },
   { path: 'reservations/new', canActivate: [AuthGuard], component: ReservationsFormComponent },
   { path: 'reservations/edit/:id', canActivate: [AuthGuard], component: ReservationsFormComponent },

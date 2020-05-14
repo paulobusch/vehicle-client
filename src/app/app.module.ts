@@ -21,6 +21,7 @@ import { VehiclesFormComponent } from './vehicles/vehicles-form/vehicles-form.co
 import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.component';
 import { HttpInterceptorProviders } from './shared/interceptors/provider-interceptor';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmDialogComponent } from './shared/modal/confirm-dialog/confirm-dialog.component';
 import { ModalService } from './shared/modal/modal.service';
@@ -32,6 +33,10 @@ import { BrandsListComponent } from './brands/brands-list/brands-list.component'
 import { BrandsFormComponent } from './brands/brands-form/brands-form.component';
 import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt);
 
 @NgModule({
   declarations: [
@@ -63,6 +68,7 @@ import { NgxMaskModule } from 'ngx-mask';
     ModalModule.forRoot(),
     TypeaheadModule.forRoot(),
     NgxMaskModule.forRoot(),
+    PaginationModule.forRoot(),
   ],
   providers: [
     AuthGuard,

@@ -13,6 +13,7 @@ import { ModalService } from 'src/app/shared/modal/modal.service';
 import { DeleteReservation } from '../mutations/delete-reservation';
 import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handler-service';
 import { FinishReservation } from '../mutations/finish-reservation';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-reservations-list',
@@ -62,10 +63,11 @@ export class ReservationsListComponent implements OnInit {
   }
 
   filter() {
+    const rawContact = _.deburr(this.clientFilter.contactName.toLocaleLowerCase());
     this.reservationsFiltred = this.reservations.filter(reservation => {
-      return (!this.clientFilter.contactName || reservation.contactName.indexOf(this.clientFilter.contactName) !== -1)
-        && (!this.clientFilter.modelName || reservation.vehicleModelName.toLowerCase() === this.clientFilter.modelName.toLowerCase())
-        && (!this.clientFilter.brandName || reservation.vehicleBrandName.toLowerCase() === this.clientFilter.brandName.toLowerCase());
+      return (!this.clientFilter.contactName || reservation.contactName.indexOf(rawContact) !== -1)
+        && (!this.clientFilter.modelName || reservation.vehicleModelName === this.clientFilter.modelName)
+        && (!this.clientFilter.brandName || reservation.vehicleBrandName === this.clientFilter.brandName);
     });
   }
 

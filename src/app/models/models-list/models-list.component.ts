@@ -8,6 +8,7 @@ import { ListState } from 'src/app/shared/metadata/list-state';
 import * as _ from 'lodash';
 import { DeleteModel } from '../mutations/delete-model';
 import { SnackService } from 'src/app/shared/services/snack-service';
+import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handler-service';
 
 @Component({
   selector: 'app-models-list',
@@ -30,6 +31,7 @@ export class ModelsListComponent implements OnInit {
     private modalService: ModalService,
     private snackService: SnackService,
     private queriesHandler: QueriesHandlerService,
+    private mutationsHandler: MutationsHandlerService
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +66,7 @@ export class ModelsListComponent implements OnInit {
     this.modalService.confirmRemove('Tem certeza que deseja remover o modelo?').subscribe(confirm => {
       if (!confirm) return;
       const mutation = new DeleteModel(id);
-      this.queriesHandler.handle(mutation).subscribe(
+      this.mutationsHandler.handle(mutation).subscribe(
         (rs) => {
           this.models = this.models.filter(v => v.id !== id);
           this.modelsFiltred = this.modelsFiltred.filter(v => v.id !== id);
