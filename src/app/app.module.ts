@@ -35,6 +35,7 @@ import { ContactFormComponent } from './contact/contact-form/contact-form.compon
 import { NgxMaskModule } from 'ngx-mask';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { HomePageComponent } from './home/home-page/home-page.component';
 
 registerLocaleData(localePt);
 
@@ -53,7 +54,8 @@ registerLocaleData(localePt);
     ModelsFormComponent,
     BrandsListComponent,
     BrandsFormComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    HomePageComponent
   ],
   imports: [
     FormsModule,

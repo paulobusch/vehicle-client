@@ -13,10 +13,12 @@ import { BrandsFormComponent } from './brands/brands-form/brands-form.component'
 import { ContactFormComponent } from './contact/contact-form/contact-form.component';
 import { ReservationsFormComponent } from './reservations/reservations-form/reservations-form.component';
 import { AnnouncementsFormComponent } from './announcements/announcements-form/announcements-form.component';
+import { HomePageComponent } from './home/home-page/home-page.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'announcements' },
   { path: 'login', component: LoginFormComponent },
+  { path: 'home', component: HomePageComponent },
   { path: 'announcements', component: AnnouncementsListComponent },
   { path: 'announcements/new', component: AnnouncementsFormComponent },
   { path: 'announcements/edit/:id', component: AnnouncementsFormComponent },

@@ -1,0 +1,11 @@
+@import '../../../styles/app-lists.css';
+
+table td:nth-child(3), table td:nth-child(4) { word-break: break-word; }
+
+
+.cards {
+    justify-content: space-around;
+}
+
+.cards .announcement {
+}
