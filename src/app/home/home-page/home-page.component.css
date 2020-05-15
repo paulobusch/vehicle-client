@@ -2,10 +2,23 @@
 
 table td:nth-child(3), table td:nth-child(4) { word-break: break-word; }
 
-
-.cards {
-    justify-content: space-around;
+.list {
+    margin-top: 0px;
 }
 
-.cards .announcement {
+.fixed {
+    padding-top: 25px;
+    background-color: rgb(223, 237, 255);
+    position: sticky;
+    z-index: 4;
+    top: 64px;
+}
+
+.fixed.done {
+    border-bottom: 1px solid rgb(168, 168, 168);
+}
+
+.cards {
+    margin-top: 15px;
+    justify-content: space-around;
 }

@@ -1,4 +1,10 @@
-.user{
+.fixed-top {
+    position: sticky !important;
+    z-index: 5;
+    top: 0;
+}
+
+.user {
     color: white;
 }
 
