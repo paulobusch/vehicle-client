@@ -25,7 +25,6 @@ import { SnackService } from 'src/app/shared/services/snack-service';
   styleUrls: ['./vehicles-form.component.css']
 })
 export class VehiclesFormComponent implements OnInit {
-
   id: string;
   isNew: boolean;
   form: FormGroup;
@@ -116,6 +115,8 @@ export class VehiclesFormComponent implements OnInit {
   }
 
   isValidForm(): boolean {
+    this.form.markAllAsTouched();
+
     if (!this.form.valid) {
       this.snackService.open('Existem campos inválidos!');
       return false;

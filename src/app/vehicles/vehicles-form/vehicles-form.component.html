@@ -32,7 +32,7 @@
             <div class="row justify-content-between">
                 <div class="form-group col-9">
                     <input type="text" class="form-control" [typeahead]="brands" [(ngModel)]="brandName" [ngModelOptions]="{standalone: true}" 
-                        (typeaheadOnSelect)="onSelect($event.item.id, 'brandId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('brandId')" placeholder="marca"/>
+                        (typeaheadOnSelect)="onSelect($event.item.id, 'brandId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('brandId')" placeholder="Marca"/>
                     <div class="invalid-feedback">O campo marca deve ser informado!</div>
                 </div>
                 <div class="col-3">

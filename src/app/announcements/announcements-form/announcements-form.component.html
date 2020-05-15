@@ -1,1 +1,33 @@
-<p>announcements-form works!</p>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-sm-12">
+        <h3 class="title">
+            {{ !isNew && announcement ? 'Edição de Anúncio' : '' }}
+            {{ !isNew && !announcement ? 'Carregando...' : '' }}
+            {{ isNew ? 'Cadastro de Anúncio' : '' }}
+        </h3>
+        <form [formGroup]="form">
+            <div class="row justify-content-between">
+                <div class="form-group col-6">
+                    <input type="number" class="form-control" formControlName="pricePurchase" [class.is-invalid]="!isValidField('pricePurchase')" placeholder="Preço compra">
+                    <div class="invalid-feedback">O campo preço de compra é obrigatório!</div>
+                </div>
+                <div class="form-group col-6">
+                    <input type="number" class="form-control" formControlName="priceSale" [class.is-invalid]="!isValidField('priceSale')" placeholder="Preço venda">
+                    <div class="invalid-feedback">O campo preço de venda é obrigatório!</div>
+                </div>
+            </div>
+            <div class="row justify-content-between">
+                <div class="form-group col-9">
+                    <input type="text" class="form-control" [typeahead]="vehicles" [(ngModel)]="vehicleName" [ngModelOptions]="{standalone: true}" 
+                        (typeaheadOnSelect)="onSelect($event.item.id, 'vehicleId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('vehicleId')" placeholder="Veículo"/>
+                    <div class="invalid-feedback">O campo veiculo deve ser informado!</div>
+                </div>
+                <div class="col-3">
+                    <button type="submit" *ngIf="form.dirty" (click)="save()" class="btn btn-primary">Salvar</button>
+                    <button type="submit" *ngIf="!form.dirty" (click)="close()" class="btn btn-primary">Fechar</button>
+                </div>
+            </div>
+        </form>
+        <ngx-snackbar position="bottom-center" max="3"></ngx-snackbar>
+    </div>
+</div>
