@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, KeyValueDiffers } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QueriesHandlerService } from 'src/app/shared/handlers/query-handler-service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -15,6 +15,7 @@ import { IMutationResult } from 'src/app/shared/handlers/results/mutation-result
 import { HttpErrorResponse } from '@angular/common/http';
 import { EStatusCode } from 'src/app/shared/handlers/enums/status-code';
 import { ModalService } from 'src/app/shared/modal/modal.service';
+import { AuthService } from 'src/app/shared/services/auth-service';
 
 @Component({
   selector: 'app-reservations-form',
@@ -35,6 +36,7 @@ export class ReservationsFormComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private snackService: SnackService,
     private modalService: ModalService,
@@ -58,6 +60,12 @@ export class ReservationsFormComponent implements OnInit {
   }
 
   loadReservation() {
+    if (!this.authService.validateAuthorization()) {
+      if (!localStorage.getItem('contact')) return;
+      const contact = JSON.parse(atob(localStorage.getItem('contact')));
+      this.form.markAsDirty();
+      return this.form.patchValue(contact);
+    }
     if (this.isNew) return;
 
     const query = new GetReservation(this.id);
@@ -80,7 +88,17 @@ export class ReservationsFormComponent implements OnInit {
       value.id = NewId();
       const mutation = Object.assign(new CreateReservation(), value);
       this.mutationsHandler.handle(mutation).subscribe(
-        () => this.close(),
+        () => {
+          if (!this.authService.validateAuthorization()){
+            const contactData = { contactName: value.contactName, contactPhone: value.contactPhone };
+            localStorage.setItem('contact', btoa(JSON.stringify(contactData)));
+          }
+          if (!this.idAnnouncement) return this.close();
+          const message = 'O Vendedor irá entrar em contato para combinar o pagamento';
+          this.modalService.showInformation('Compra', message).subscribe(() => {
+            this.router.navigate(['home']);
+          });
+        },
         (err: HttpErrorResponse) => {
           const result = err.error as IMutationResult;
           const msgDuplicateName = 'Contact with ContactPhone already exists';
@@ -106,12 +124,7 @@ export class ReservationsFormComponent implements OnInit {
   }
 
   close() {
-    if (this.idAnnouncement) {
-      const message = 'O Vendedor irá entrar em contato para combinar o pagamento';
-      this.modalService.showInformation('Compra', message).subscribe(() => {
-        this.router.navigate(['home']);
-      });
-    }
+    if (this.idAnnouncement) return this.router.navigate(['home']);
     this.router.navigate(['reservations']);
   }
 
