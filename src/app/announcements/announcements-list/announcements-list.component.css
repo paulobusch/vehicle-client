@@ -17,3 +17,9 @@ table td:nth-child(7)
 table {
     max-height: calc(95vh - 190px) !important;
 }
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

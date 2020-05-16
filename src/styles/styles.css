@@ -19,3 +19,13 @@ table {
 }
 
 .modal-app>div { border: none; }
+
+.checkbox {
+    display: flex;
+    align-items: center;    
+    margin-bottom: 1rem;
+}
+
+.checkbox label {
+    margin: 0 5px;
+}

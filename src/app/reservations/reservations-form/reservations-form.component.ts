@@ -14,6 +14,7 @@ import { UpdateReservation } from '../mutations/update-reservation';
 import { IMutationResult } from 'src/app/shared/handlers/results/mutation-result';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EStatusCode } from 'src/app/shared/handlers/enums/status-code';
+import { ModalService } from 'src/app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-reservations-form',
@@ -23,6 +24,7 @@ import { EStatusCode } from 'src/app/shared/handlers/enums/status-code';
 export class ReservationsFormComponent implements OnInit {
 
   id: string;
+  idAnnouncement: string;
   isNew: boolean;
 
   form: FormGroup;
@@ -35,16 +37,18 @@ export class ReservationsFormComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private snackService: SnackService,
+    private modalService: ModalService,
     private activatedRouter: ActivatedRoute,
     private mutationsHandler: MutationsHandlerService,
     private queriesHandler: QueriesHandlerService
   ) {
     this.id = this.activatedRouter.snapshot.paramMap.get('id');
+    this.idAnnouncement = this.activatedRouter.snapshot.paramMap.get('id_announcement');
     this.isNew = !this.id;
     this.form = this.formBuilder.group({
       contactName: new FormControl('', [Validators.required, Validators.maxLength(150)]),
       contactPhone: new FormControl('', [Validators.required, Validators.maxLength(15)]),
-      announcementId: new FormControl('', [Validators.required])
+      announcementId: new FormControl(this.idAnnouncement, [Validators.required])
     });
   }
 
@@ -102,13 +106,25 @@ export class ReservationsFormComponent implements OnInit {
   }
 
   close() {
+    if (this.idAnnouncement) {
+      const message = 'O Vendedor irá entrar em contato para combinar o pagamento';
+      this.modalService.showInformation('Compra', message).subscribe(() => {
+        this.router.navigate(['home']);
+      });
+    }
     this.router.navigate(['reservations']);
   }
 
   loadSelects() {
     const listAnnouncements = new ListAnnouncementSelectList();
     this.queriesHandler.handle(listAnnouncements).subscribe(
-      (rs) => this.announcements = rs.data,
+      (rs) => {
+        this.announcements = rs.data;
+        if (this.idAnnouncement) {
+          const announcement = rs.data.find(f => f.id === this.idAnnouncement);
+          this.announcementName = announcement.name;
+        }
+      },
       () => this.snackService.open('Falha ao carregar anúncios!')
     );
   }

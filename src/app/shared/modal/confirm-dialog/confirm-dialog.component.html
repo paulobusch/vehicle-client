@@ -10,7 +10,7 @@
         <span>{{ message }}</span>
     </div>
     <div class="actions row justify-content-end">
-        <button class="btn btn-primary" (click)="cancel()">{{ btnCancel }}</button>
+        <button class="btn btn-primary" (click)="cancel()" *ngIf="btnCancel">{{ btnCancel }}</button>
         <button class="btn" [ngClass]="{ 'btn-danger': confirmCritial, 'btn-primary': !confirmCritial }" (click)="confirm()">{{ btnConfirm }}</button>
     </div>
 </div>

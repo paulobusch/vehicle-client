@@ -10,13 +10,14 @@ import { ListModels } from 'src/app/models/queries/list-models';
 import { ListAnnouncement } from 'src/app/announcements/queries/list-announcements';
 import { ListColors } from 'src/app/vehicles/queries/list-colors';
 import { ColorList } from 'src/app/vehicles/queries/view-models/color-list';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
-export class HomePageComponent implements OnInit, AfterContentChecked {
+export class HomePageComponent implements OnInit {
 
   brands: BrandList[] = [];
   models: ModelList[] = [];
@@ -32,7 +33,7 @@ export class HomePageComponent implements OnInit, AfterContentChecked {
   };
 
   constructor(
-    private ref: ChangeDetectorRef,
+    private router: Router,
     private queriesHandler: QueriesHandlerService,
     private snackService: SnackService
   ) { }
@@ -40,10 +41,6 @@ export class HomePageComponent implements OnInit, AfterContentChecked {
   ngOnInit(): void {
     this.refresh();
     this.loadSelects();
-  }
-
-  ngAfterContentChecked() {
-    this.ref.detectChanges();
   }
 
   search() {
@@ -66,7 +63,7 @@ export class HomePageComponent implements OnInit, AfterContentChecked {
   }
 
   purchase(id: string) {
-
+    this.router.navigate(['reservations', 'new', { id_announcement: id }]);
   }
 
   loadSelects() {

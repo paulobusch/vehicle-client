@@ -6,7 +6,7 @@ export function toUrl(obj: any): string {
         const value = obj[prop];
         if (!value) continue;
         const type = typeof value;
-        if (['number', 'string'].indexOf(type) !== -1){
+        if (['number', 'string', 'boolean'].indexOf(type) !== -1){
             props.push(`${prop}=${value.toString()}`);
         }
         if (value instanceof Date) {

@@ -29,22 +29,22 @@
                 {{ listState.noItems ? 'Nenhum veículo' : '' }}
             </div>
         </div>
-        <div class="row cards" *ngIf="listState.done">
+        <div class="row cards card-group" *ngIf="listState.done">
             <div class="announcement" *ngFor="let announcement of announcements">
-                <div class="card border-success mb-3" style="max-width: 300px;">
+                <div class="card border-success mb-3">
                     <div class="header card-header bg-transparent border-success">
                         <h5 class="card-title text-success">R$ {{ announcement.priceSale | number: '1.2-2' }}</h5>
                         <div class="demo-color" tooltip="Cor" [style.background-color]="announcement.vehicleColorHex"></div>
                     </div>
                     <div class="card-body">
-                        <span class="card-text text-info"><strong>Cor:</strong> {{ announcement.vehicleColorName }}</span><br />
                         <span class="card-text text-info"><strong>Ano:</strong> {{ announcement.vehicleYear }}</span><br />
-                        <span class="card-text text-info"><strong>Combustível:</strong> {{ announcement.vehicleFuelName }}</span><br/>
+                        <span class="card-text text-info"><strong>Modelo:</strong> {{ announcement.vehicleModelName }}</span><br />
                         <span class="card-text text-info"><strong>Marca:</strong> {{ announcement.vehicleBrandName }}</span><br />
-                        <span class="card-text text-info"><strong>Modelo:</strong> {{ announcement.vehicleModelName }}</span>
+                        <span class="card-text text-info"><strong>Combustível:</strong> {{ announcement.vehicleFuelName }}</span><br/>
+                        <span class="card-text text-info"><strong>Cor:</strong> {{ announcement.vehicleColorName }}</span>
                     </div>
-                    <div class="card-footer row">
-                        <button class="btn btn-outline-primary col align-self-end" (click)="purchase(announcement.id)">Comparar</button>
+                    <div class="card-footer row"> 
+                        <button class="btn btn-light col align-self-end" (click)="purchase(announcement.id)">Comparar</button>
                     </div>
                   </div>
             </div>

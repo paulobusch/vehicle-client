@@ -12,7 +12,8 @@ export class ListAnnouncement implements IQuery<AnnouncementList[]> {
     public sortColumn: string;
     public sortOrder: EOrder;
     public year: number;
-    public withSold: boolean;
+    public includeReserved: boolean;
+    public includeSold: boolean;
     public dateSale: Date;
     public brandId: string;
     public modelId: string;

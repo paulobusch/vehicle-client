@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'announcements/new', canActivate: [AuthGuard], component: AnnouncementsFormComponent },
   { path: 'announcements/edit/:id', canActivate: [AuthGuard], component: AnnouncementsFormComponent },
   { path: 'reservations', canActivate: [AuthGuard], component: ReservationsListComponent },
-  { path: 'reservations/new', canActivate: [AuthGuard], component: ReservationsFormComponent },
+  { path: 'reservations/new', component: ReservationsFormComponent },
   { path: 'reservations/edit/:id', canActivate: [AuthGuard], component: ReservationsFormComponent },
   { path: 'vehicles', canActivate: [AuthGuard], component: VehiclesListComponent },
   { path: 'vehicles/new', canActivate: [AuthGuard], component: VehiclesFormComponent },

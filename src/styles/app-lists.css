@@ -8,7 +8,6 @@
 }
 
 table {
-    display: block;
     max-height: calc(95vh - 150px);
     overflow-y: auto;
     overflow-x: hidden;

@@ -23,6 +23,10 @@ table td:nth-child(3), table td:nth-child(4) { word-break: break-word; }
     justify-content: space-around;
 }
 
+.announcement .card {
+    width: 300px;
+}
+
 .announcement h5 {
     margin-bottom: 0;
 }
@@ -36,7 +40,7 @@ table td:nth-child(3), table td:nth-child(4) { word-break: break-word; }
 .demo-color {
     width: 50px;
     height: 20px;
-    border-color: 1px solid rgb(92, 92, 92);   
+    border: 1px solid rgb(92, 92, 92);   
 }
 
 .card-footer button {

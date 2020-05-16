@@ -30,7 +30,8 @@ export class AnnouncementsListComponent implements OnInit {
   listState: ListState = new ListState();
   clientFilter =  {
     modelName: '',
-    brandName: ''
+    brandName: '',
+    dateSaleStr: ''
   };
 
   constructor(
@@ -39,14 +40,22 @@ export class AnnouncementsListComponent implements OnInit {
     private queriesHandler: QueriesHandlerService,
     private mutationsHandler: MutationsHandlerService,
     private snackService: SnackService
-  ) { }
+  ) {
+    this.query.includeReserved = true;
+  }
 
   ngOnInit(): void {
     this.loadSelects();
     this.refresh();
   }
 
+  search() {
+    this.query.page = 1;
+    this.refresh();
+  }
+
   refresh() {
+    this.updateQuery();
     this.listState.reset();
     if (!this.clientFilter.brandName) this.query.brandId = null;
     if (!this.clientFilter.modelName) this.query.modelId = null;
@@ -57,6 +66,11 @@ export class AnnouncementsListComponent implements OnInit {
       },
       () => this.snackService.open('Falha ao carregar anúncios!')
     );
+  }
+
+  updateQuery() {
+    const dateStr = this.clientFilter.dateSaleStr;
+    this.query.dateSale = dateStr ? new Date(dateStr) : null;
   }
 
   open(id: string) {

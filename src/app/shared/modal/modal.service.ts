@@ -22,4 +22,10 @@ export class ModalService {
     const modal = this.modalService.show(ConfirmDialogComponent, { class: 'modal-app', initialState: { title, message, confirmCritial } });
     return modal.content.onClose.asObservable();
   }
+
+  showInformation(title: string, message: string): Observable<boolean> {
+    const initialState = { title, message, btnConfirm: 'OK', btnCancel: null };
+    const modal = this.modalService.show(ConfirmDialogComponent, { class: 'modal-app', initialState });
+    return modal.content.onClose.asObservable();
+  }
 }
