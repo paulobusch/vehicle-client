@@ -14,6 +14,7 @@ import { ContactFormComponent } from './contact/contact-form/contact-form.compon
 import { ReservationsFormComponent } from './reservations/reservations-form/reservations-form.component';
 import { AnnouncementsFormComponent } from './announcements/announcements-form/announcements-form.component';
 import { HomePageComponent } from './home/home-page/home-page.component';
+import { SalesReportComponent } from './reports/sales-report/sales-report.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'announcements' },
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'brands', canActivate: [AuthGuard], component: BrandsListComponent },
   { path: 'brands/new', canActivate: [AuthGuard], component: BrandsFormComponent },
   { path: 'brands/edit/:id', canActivate: [AuthGuard], component: BrandsFormComponent },
+  { path: 'reports/sales', canActivate: [AuthGuard], component: SalesReportComponent },
   { path: 'contact', component: ContactFormComponent },
 ];
 

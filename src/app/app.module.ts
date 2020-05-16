@@ -36,6 +36,8 @@ import { NgxMaskModule } from 'ngx-mask';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { HomePageComponent } from './home/home-page/home-page.component';
+import { SalesFilterComponent } from './reports/sales-filter/sales-filter.component';
+import { SalesReportComponent } from './reports/sales-report/sales-report.component';
 
 registerLocaleData(localePt);
 
@@ -55,7 +57,9 @@ registerLocaleData(localePt);
     BrandsListComponent,
     BrandsFormComponent,
     ContactFormComponent,
-    HomePageComponent
+    HomePageComponent,
+    SalesFilterComponent,
+    SalesReportComponent
   ],
   imports: [
     FormsModule,
