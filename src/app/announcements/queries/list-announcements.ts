@@ -7,8 +7,8 @@ import { toUrl } from 'src/app/shared/content/to-url';
 import { EOrder } from 'src/app/shared/enums/order';
 
 export class ListAnnouncement implements IQuery<AnnouncementList[]> {
-    public page: number;
-    public limit: number;
+    public page: number = 1;
+    public limit: number = 10;
     public sortColumn: string;
     public sortOrder: EOrder;
     public year: number;
@@ -16,6 +16,7 @@ export class ListAnnouncement implements IQuery<AnnouncementList[]> {
     public dateSale: Date;
     public brandId: string;
     public modelId: string;
+    public colorId: string;
 
     execute(http: HttpClient, apiUrl: string): Observable<IQueryResult<AnnouncementList[]>> {
         return http.get<IQueryResult<AnnouncementList[]>>(`${apiUrl}/announcements?${toUrl(this)}`);

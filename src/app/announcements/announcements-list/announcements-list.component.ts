@@ -48,6 +48,8 @@ export class AnnouncementsListComponent implements OnInit {
 
   refresh() {
     this.listState.reset();
+    if (!this.clientFilter.brandName) this.query.brandId = null;
+    if (!this.clientFilter.modelName) this.query.modelId = null;
     this.queriesHandler.handle(this.query).subscribe(
       (rs) => {
         this.announcements = rs.data;

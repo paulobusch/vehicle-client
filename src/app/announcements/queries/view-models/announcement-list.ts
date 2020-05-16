@@ -8,4 +8,5 @@ export class AnnouncementList {
     public vehicleColorHex: string;
     public vehicleModelName: string;
     public vehicleBrandName: string;
+    public vehicleFuelName: string;
 }

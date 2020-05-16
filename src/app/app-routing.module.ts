@@ -19,9 +19,9 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'announcements' },
   { path: 'login', component: LoginFormComponent },
   { path: 'home', component: HomePageComponent },
-  { path: 'announcements', component: AnnouncementsListComponent },
-  { path: 'announcements/new', component: AnnouncementsFormComponent },
-  { path: 'announcements/edit/:id', component: AnnouncementsFormComponent },
+  { path: 'announcements', canActivate: [AuthGuard], component: AnnouncementsListComponent },
+  { path: 'announcements/new', canActivate: [AuthGuard], component: AnnouncementsFormComponent },
+  { path: 'announcements/edit/:id', canActivate: [AuthGuard], component: AnnouncementsFormComponent },
   { path: 'reservations', canActivate: [AuthGuard], component: ReservationsListComponent },
   { path: 'reservations/new', canActivate: [AuthGuard], component: ReservationsFormComponent },
   { path: 'reservations/edit/:id', canActivate: [AuthGuard], component: ReservationsFormComponent },
@@ -34,7 +34,7 @@ const routes: Routes = [
   { path: 'brands', canActivate: [AuthGuard], component: BrandsListComponent },
   { path: 'brands/new', canActivate: [AuthGuard], component: BrandsFormComponent },
   { path: 'brands/edit/:id', canActivate: [AuthGuard], component: BrandsFormComponent },
-  { path: 'contact', canActivate: [AuthGuard], component: ContactFormComponent },
+  { path: 'contact', component: ContactFormComponent },
 ];
 
 @NgModule({

@@ -14,7 +14,6 @@ import { CreateVechicle } from '../mutations/create-vehicle';
 import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handler-service';
 import { NewId } from 'src/app/shared/random/new-id';
 import { UpdateVechicle } from '../mutations/update-vehicle';
-import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/ngx-bootstrap-typeahead';
 import { GetVehicle } from '../queries/get-vehicle';
 import { VehicleDetail } from '../queries/view-models/vehicle-detail';
 import { SnackService } from 'src/app/shared/services/snack-service';

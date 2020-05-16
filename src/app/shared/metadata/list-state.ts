@@ -1,7 +1,7 @@
 import { IQueryResult } from '../handlers/results/query-result';
 
 export class ListState {
-    get done(): boolean { return !this.loading && !this.noItems }
+    get done(): boolean { return !this.loading && !this.noItems; }
     public loading: boolean;
     public totalRows: number;
     public noItems: boolean;
@@ -9,7 +9,6 @@ export class ListState {
     public reset() {
         this.noItems = false;
         this.loading = true;
-        this.totalRows = 0;
     }
 
     public loaded<T>(result: IQueryResult<T>) {

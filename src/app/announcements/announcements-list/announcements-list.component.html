@@ -7,10 +7,10 @@
                         <path fill-rule="evenodd" d="M16 8A8 8 0 110 8a8 8 0 0116 0zM8.5 4a.5.5 0 00-1 0v3.5H4a.5.5 0 000 1h3.5V12a.5.5 0 001 0V8.5H12a.5.5 0 000-1H8.5V4z" clip-rule="evenodd"/>
                     </svg>
                 </div>
-                <div class="form-group col-1">
+                <div class="form-group col" style="max-width: 11%;">
                     <input type="number" class="form-control" (keyup.enter)="refresh()" [(ngModel)]="query.year" placeholder="Ano"/>
                 </div>
-                <div class="form-group col-3">
+                <div class="form-group col" style="max-width: 22%;">
                     <input type="date" class="form-control" (keyup.enter)="refresh()" [(ngModel)]="query.dateSale" placeholder="Venda"/>
                 </div>
                 <div class="form-group col-2">
@@ -63,7 +63,7 @@
             </tbody>
         </table>
         <div *ngIf="listState.done" class="row justify-content-between">
-            <div class="col-1">
+            <div class="col-6">
                 <select>
                     <option value="10">10</option>
                     <option value="25">25</option>
@@ -71,7 +71,7 @@
                     <option value="100">100</option>
                 </select>
             </div>
-            <div class="col">
+            <div class="col-6">
                 <pagination  [totalItems]="listState.totalRows" [(ngModel)]="query.page" (pageChanged)="refresh()"></pagination>
             </div>
         </div>

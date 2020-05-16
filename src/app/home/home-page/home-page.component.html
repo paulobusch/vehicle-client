@@ -5,16 +5,19 @@
             <div class="filters">
                 <div class="row justify-content-between">
                     <div class="form-group col-2">
-                        <input type="number" class="form-control" [(ngModel)]="query.year" (keyup.enter)="refresh()" placeholder="Ano">
+                        <input type="number" class="form-control" [(ngModel)]="query.year" (keyup.enter)="search()" placeholder="Ano">
                     </div>
-                    <div class="form-group col-4">
-                        <input class="form-control" [typeahead]="brands" (keyup.enter)="refresh()" (typeaheadOnSelect)="query.brandId=$event.item.id; refresh()" [(ngModel)]="clientFilter.brandName" typeaheadOptionField="name" placeholder="Marca"/>
+                    <div class="form-group col-3">
+                        <input class="form-control" [typeahead]="colors" (keyup.enter)="search()" (typeaheadOnSelect)="query.colorId=$event.item.id; search()" [(ngModel)]="clientFilter.colorName" typeaheadOptionField="name" placeholder="Cor"/>
                     </div>
-                    <div class="form-group col-4">
-                        <input class="form-control" [typeahead]="models" (keyup.enter)="refresh()" (typeaheadOnSelect)="query.modelId=$event.item.id; refresh()" [(ngModel)]="clientFilter.modelName" typeaheadOptionField="name" placeholder="Modelo"/>
+                    <div class="form-group col-3">
+                        <input class="form-control" [typeahead]="brands" (keyup.enter)="search()" (typeaheadOnSelect)="query.brandId=$event.item.id; search()" [(ngModel)]="clientFilter.brandName" typeaheadOptionField="name" placeholder="Marca"/>
+                    </div>
+                    <div class="form-group col-3">
+                        <input class="form-control" [typeahead]="models" (keyup.enter)="search()" (typeaheadOnSelect)="query.modelId=$event.item.id; search()" [(ngModel)]="clientFilter.modelName" typeaheadOptionField="name" placeholder="Modelo"/>
                     </div>
                     <div  class="form-group col-1">
-                        <svg class="bi bi-search pointer" (click)="refresh()" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="bi bi-search pointer" (click)="search()" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
                             <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
                         </svg>
@@ -23,34 +26,40 @@
             </div>
             <div class="feedback">
                 {{ listState.loading ? 'Carregando...' : '' }}
-                {{ listState.noItems ? '' : '' }}
+                {{ listState.noItems ? 'Nenhum veículo' : '' }}
             </div>
         </div>
         <div class="row cards" *ngIf="listState.done">
             <div class="announcement" *ngFor="let announcement of announcements">
-                <div class="card border-success mb-3" style="max-width: 200px;">
-                    <div class="card-header bg-transparent border-success">{{ announcement.vehicleModelName }}</div>
+                <div class="card border-success mb-3" style="max-width: 300px;">
+                    <div class="header card-header bg-transparent border-success">
+                        <h5 class="card-title text-success">R$ {{ announcement.priceSale | number: '1.2-2' }}</h5>
+                        <div class="demo-color" tooltip="Cor" [style.background-color]="announcement.vehicleColorHex"></div>
+                    </div>
                     <div class="card-body">
-                      <h5 class="card-title text-success">R$ {{ announcement.priceSale | number: '1.2-2' }}</h5>
-                      <p class="card-text text-info">Ano: {{ announcement.vehicleYear }}</p>
-                      <p class="card-text text-danger">Cor: {{ announcement.vehicleColorName }}</p>
-                      <p class="card-text text-warning">Marca: {{ announcement.vehicleBrandName }}</p>
+                        <span class="card-text text-info"><strong>Cor:</strong> {{ announcement.vehicleColorName }}</span><br />
+                        <span class="card-text text-info"><strong>Ano:</strong> {{ announcement.vehicleYear }}</span><br />
+                        <span class="card-text text-info"><strong>Combustível:</strong> {{ announcement.vehicleFuelName }}</span><br/>
+                        <span class="card-text text-info"><strong>Marca:</strong> {{ announcement.vehicleBrandName }}</span><br />
+                        <span class="card-text text-info"><strong>Modelo:</strong> {{ announcement.vehicleModelName }}</span>
+                    </div>
+                    <div class="card-footer row">
+                        <button class="btn btn-outline-primary col align-self-end" (click)="purchase(announcement.id)">Comparar</button>
                     </div>
                   </div>
             </div>
         </div>
-        <div class="pagination" *ngIf="listState.done" class="row justify-content-between">
-            <div class="col-1">
-                <select>
+        <div class="pagination" [class.hidden]="!listState.done">
+            <div>
+                <select [(ngModel)]="query.limit" (change)="search()">
                     <option value="10">10</option>
                     <option value="25">25</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
                 </select>
             </div>
-            <div class="col">
-                <pagination  [totalItems]="listState.totalRows" [(ngModel)]="query.page" (pageChanged)="refresh()"></pagination>
-            </div>
+            <pagination [boundaryLinks]="true" [(ngModel)]="query.page" [(itemsPerPage)]="query.limit" [totalItems]="listState.totalRows" (pageChanged)="refresh()"
+                [maxSize]="5" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
         </div>
     </div>
 </div>
