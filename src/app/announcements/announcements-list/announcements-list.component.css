@@ -18,6 +18,11 @@ table {
     max-height: calc(95vh - 190px) !important;
 }
 
+table tr td:last-child {
+    color: red;
+    text-align: center;
+}
+
 .pagination {
     display: flex;
     justify-content: space-between;

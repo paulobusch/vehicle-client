@@ -52,3 +52,8 @@ table td:nth-child(3), table td:nth-child(4) { word-break: break-word; }
     justify-content: space-between;
     align-items: center;
 }
+
+table tr td:last-child {
+    color: red;
+    text-align: center;
+}

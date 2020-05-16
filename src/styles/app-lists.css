@@ -24,11 +24,6 @@ table tbody td {
     vertical-align: middle;
 }
 
-table tr td:last-child {
-    color: red;
-    text-align: center;
-}
-
 table thead {
     width: 100%;
 }

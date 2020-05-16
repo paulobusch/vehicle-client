@@ -20,12 +20,13 @@ table {
 
 .modal-app>div { border: none; }
 
+.datepicker,
 .checkbox {
     display: flex;
     align-items: center;    
     margin-bottom: 1rem;
 }
-
-.checkbox label {
-    margin: 0 5px;
+.datepicker input,
+.checkbox input {
+    margin: 0 15px;
 }
