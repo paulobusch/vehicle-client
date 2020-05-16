@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ListAnnouncementReport } from '../queries/list-announcement-resport';
 import { AnnouncementReportList } from '../queries/view-models/announcement-report-list';
 import * as moment from 'moment';
 import { QueriesHandlerService } from 'src/app/shared/handlers/query-handler-service';
 import { SnackService } from 'src/app/shared/services/snack-service';
 import { ListState } from 'src/app/shared/metadata/list-state';
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-sales-report',
@@ -12,7 +13,6 @@ import { ListState } from 'src/app/shared/metadata/list-state';
   styleUrls: ['./sales-report.component.css']
 })
 export class SalesReportComponent implements OnInit {
-
   sales: AnnouncementReportList[] = [];
 
   listState: ListState = new ListState();
@@ -51,7 +51,15 @@ export class SalesReportComponent implements OnInit {
   }
 
   export() {
-
+    const html = document.getElementById('container-table');
+    const margins = { top: 40, bottom: 40, left: 70, right: 70, width: 1000 };
+    const pdf = new jsPDF('p', 'pt', 'a4');
+    pdf.fromHTML(
+      html, margins.left, margins.top,
+      { width: margins.width },
+      () => pdf.save('Vendas.pdf'),
+      margins
+    );
   }
 
   isValidQuery(): boolean {
