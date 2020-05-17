@@ -9,6 +9,8 @@ import * as _ from 'lodash';
 import { DeleteModel } from '../mutations/delete-model';
 import { SnackService } from 'src/app/shared/services/snack-service';
 import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handler-service';
+import { BrandList } from 'src/app/brands/queries/view-models/brand-list';
+import { ListBrands } from 'src/app/brands/queries/list-brands';
 
 @Component({
   selector: 'app-models-list',
@@ -17,13 +19,15 @@ import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handle
 })
 export class ModelsListComponent implements OnInit {
 
+  brands: BrandList[] = [];
   models: ModelList[] = [];
   modelsFiltred: ModelList[] = [];
 
   listState: ListState = new ListState();
   query: ListModels = new ListModels();
   queryClient: any = {
-    name: ''
+    name: '',
+    brandName: ''
   };
 
   constructor(
@@ -35,6 +39,7 @@ export class ModelsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadSelects();
     this.refresh();
   }
 
@@ -52,8 +57,12 @@ export class ModelsListComponent implements OnInit {
   }
 
   filter() {
+    const { brandName } = this.queryClient;
     const rawName = _.deburr(this.queryClient.name).toLowerCase() as string;
-    this.modelsFiltred = this.models.filter(m => m.name.toLowerCase().indexOf(rawName) !== -1);
+    this.modelsFiltred = this.models.filter(
+      m => (!rawName || m.name.toLowerCase().indexOf(rawName) !== -1)
+        && (!brandName || m.brandName === brandName)
+    );
     this.listState.totalRows = this.modelsFiltred.length;
     this.listState.noItems = this.modelsFiltred.length === 0;
   }
@@ -75,5 +84,12 @@ export class ModelsListComponent implements OnInit {
         () => this.snackService.open('Falha ao remover modelo!')
       );
     });
+  }
+
+  loadSelects() {
+    const listBrands = new ListBrands();
+    this.queriesHandler.handle(listBrands).subscribe(
+      (rs) => this.brands = rs.data,
+      ()  => this.snackService.open('Falha ao carregar marcas de veículos!'));
   }
 }

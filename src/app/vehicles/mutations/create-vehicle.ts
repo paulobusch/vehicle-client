@@ -8,7 +8,6 @@ export class CreateVechicle implements IMutation {
     public year: number;
     public fuelId: string;
     public colorId: string;
-    public brandId: string;
     public modelId: string;
 
     execute(http: HttpClient, apiUrl: string): Observable<IMutationResult> {

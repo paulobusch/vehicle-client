@@ -96,6 +96,7 @@ export class AnnouncementsFormComponent implements OnInit {
     const control = this.form.controls[fieldId];
     control.setValue(valueId);
     control.updateValueAndValidity();
+    this.form.markAsDirty();
   }
 
   isValidForm(): boolean {

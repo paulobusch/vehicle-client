@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { ModalService } from 'src/app/shared/modal/modal.service';
 import { ListColors } from '../queries/list-colors';
 import { SnackService } from 'src/app/shared/services/snack-service';
+import { ModelSelectList } from 'src/app/models/queries/view-models/model-select-list';
+import { ListModelsSelect } from 'src/app/models/queries/list-models-select';
 
 @Component({
   selector: 'app-vehicles-list',
@@ -21,20 +23,20 @@ import { SnackService } from 'src/app/shared/services/snack-service';
 })
 export class VehiclesListComponent implements OnInit {
 
-  query: ListVehicles = new ListVehicles();
-
   vehicles: VehicleList[] = [];
   vehiclesFiltred: VehicleList[] = [];
 
-  colors: ColorList[] = [];
-  models: ModelList[] = [];
+  models: ModelSelectList[] = [];
   brands: BrandList[] = [];
-
-  colorName: string;
-  modelName: string;
-  brandName: string;
+  colors: ColorList[] = [];
 
   listState: ListState = new ListState();
+  query: ListVehicles = new ListVehicles();
+  queryClient = {
+    colorName: '',
+    modelName: '',
+    brandName: ''
+  };
 
   constructor(
     private router: Router,
@@ -49,6 +51,7 @@ export class VehiclesListComponent implements OnInit {
   }
 
   refresh() {
+    this.updateQuery();
     this.listState.reset();
     this.queriesHandler.handle(this.query).subscribe(
       (rs) => {
@@ -61,14 +64,22 @@ export class VehiclesListComponent implements OnInit {
   }
 
   filter() {
+    const { brandName, colorName, modelName } = this.queryClient;
     this.vehiclesFiltred = this.vehicles.filter(vehicle => {
       return (!this.query.year || vehicle.year === this.query.year)
-        && (!this.colorName || vehicle.colorName.toLowerCase() === this.colorName.toLowerCase())
-        && (!this.brandName || vehicle.brandName.toLowerCase() === this.brandName.toLowerCase())
-        && (!this.modelName || vehicle.modelName.toLowerCase() === this.modelName.toLowerCase());
+        && (!colorName || vehicle.colorName.toLowerCase() === colorName.toLowerCase())
+        && (!brandName || vehicle.brandName.toLowerCase() === brandName.toLowerCase())
+        && (!modelName || vehicle.modelName.toLowerCase() === modelName.toLowerCase());
     });
     this.listState.totalRows = this.vehiclesFiltred.length;
     this.listState.noItems = this.vehiclesFiltred.length === 0;
+  }
+
+  updateQuery() {
+    const { brandName, colorName, modelName } = this.queryClient;
+    this.query.modelId = modelName ? this.query.modelId : null;
+    this.query.brandId = brandName ? this.query.brandId : null;
+    this.query.colorId = colorName ? this.query.colorId : null;
   }
 
   open(id: string) {
@@ -90,16 +101,20 @@ export class VehiclesListComponent implements OnInit {
     });
   }
 
+  loadModels(brandId: string) {
+    this.queryClient.modelName = '';
+    const listModels = new ListModelsSelect();
+    listModels.brandId = brandId;
+    this.queriesHandler.handle(listModels).subscribe(
+      (rs) => this.models = rs.data,
+      ()  => this.snackService.open('Falha ao carregar modelos de veículos!'));
+  }
+
   loadSelects() {
     const listColors = new ListColors();
     this.queriesHandler.handle(listColors).subscribe(
       (rs) => this.colors = rs.data,
       ()  => this.snackService.open('Falha ao carregar cores!'));
-
-    const listModels = new ListModels();
-    this.queriesHandler.handle(listModels).subscribe(
-      (rs) => this.models = rs.data,
-      ()  => this.snackService.open('Falha ao carregar modelos de veículos!'));
 
     const listBrands = new ListBrands();
     this.queriesHandler.handle(listBrands).subscribe(

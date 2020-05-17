@@ -10,6 +10,9 @@
                 <div class="form-group col-4">
                     <input type="text" class="form-control" (keyup.enter)="filter()" [(ngModel)]="queryClient.name" placeholder="Nome"/>
                 </div>
+                <div class="form-group col-4">
+                    <input class="form-control" [typeahead]="brands" (keyup.enter)="filter()" (typeaheadOnSelect)="query.brandId=$event.item.id; filter()" [(ngModel)]="queryClient.brandName" typeaheadOptionField="name" placeholder="Marca"/>
+                </div>
                 <div  class="form-group col-1 ml-auto">
                     <svg class="bi bi-search pointer" (click)="filter()" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
@@ -25,11 +28,13 @@
         <table *ngIf="listState.done" class="table table-striped table-bordered table-hover">
             <thead>
                 <th>Nome</th>
+                <th>Marca</th>
                 <th>Remover</th>
             </thead>
             <tbody>
                 <tr *ngFor="let model of modelsFiltred">
                     <td (click)="open(model.id)">{{ model.name }}</td>
+                    <td (click)="open(model.id)">{{ model.brandName }}</td>
                     <td>
                         <svg class="bi bi-trash-fill" (click)="remove(model.id)" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M2.5 1a1 1 0 00-1 1v1a1 1 0 001 1H3v9a2 2 0 002 2h6a2 2 0 002-2V4h.5a1 1 0 001-1V2a1 1 0 00-1-1H10a1 1 0 00-1-1H7a1 1 0 00-1 1H2.5zm3 4a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7a.5.5 0 01.5-.5zM8 5a.5.5 0 01.5.5v7a.5.5 0 01-1 0v-7A.5.5 0 018 5zm3 .5a.5.5 0 00-1 0v7a.5.5 0 001 0v-7z" clip-rule="evenodd"/>

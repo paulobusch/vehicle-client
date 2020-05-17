@@ -1,9 +1,10 @@
 @import '../../../styles/app-lists.css';
 
-table th:nth-child(1), table td:nth-child(1) { width: 90%; }
-table th:nth-child(2), table td:nth-child(2) { width: 10%; }
+table th:nth-child(1), table td:nth-child(1) { width: 45%; }
+table th:nth-child(2), table td:nth-child(2) { width: 45%; }
+table th:nth-child(3), table td:nth-child(3) { width: 10%; }
 
-table td:nth-child(1) { word-break: break-word; }
+table td:nth-child(1), table td:nth-child(2) { word-break: break-word; }
 
 table tr td:last-child {
     color: red;

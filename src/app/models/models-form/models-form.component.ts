@@ -13,6 +13,8 @@ import { UpdateModel } from '../mutations/update-model';
 import { IMutationResult } from 'src/app/shared/handlers/results/mutation-result';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EStatusCode } from 'src/app/shared/handlers/enums/status-code';
+import { ListBrands } from 'src/app/brands/queries/list-brands';
+import { BrandList } from 'src/app/brands/queries/view-models/brand-list';
 
 @Component({
   selector: 'app-models-form',
@@ -27,6 +29,9 @@ export class ModelsFormComponent implements OnInit {
   isNew: boolean;
   model: ModelDetail;
 
+  brands: BrandList[] = [];
+  brandName: string;
+
   constructor(
     private router: Router,
     private activeRouter: ActivatedRoute,
@@ -38,11 +43,13 @@ export class ModelsFormComponent implements OnInit {
     this.id = this.activeRouter.snapshot.paramMap.get('id');
     this.isNew = !this.id;
     this.form = this.formBuilder.group({
-      name: new FormControl('', [Validators.required])
+      name: new FormControl('', [Validators.required]),
+      brandId: new FormControl('', [Validators.required])
     });
   }
 
   ngOnInit(): void {
+    this.loadSelects();
     this.loadModel();
   }
 
@@ -58,6 +65,7 @@ export class ModelsFormComponent implements OnInit {
   setData(model: ModelDetail) {
     this.model = model;
     this.form.patchValue(this.model);
+    this.brandName = this.model.brandName;
   }
 
   save() {
@@ -96,6 +104,13 @@ export class ModelsFormComponent implements OnInit {
     this.router.navigate(['models']);
   }
 
+  onSelect(valueId: string, fieldId: string): void {
+    const control = this.form.controls[fieldId];
+    control.setValue(valueId);
+    control.updateValueAndValidity();
+    this.form.markAsDirty();
+  }
+
   isValidForm(): boolean {
     this.form.markAllAsTouched();
 
@@ -109,5 +124,12 @@ export class ModelsFormComponent implements OnInit {
   isValidField(fieldId: string): boolean {
     const control = this.form.controls[fieldId];
     return control.valid || !control.touched;
+  }
+
+  loadSelects() {
+    const listBrands = new ListBrands();
+    this.queriesHandler.handle(listBrands).subscribe(
+      (rs) => this.brands = rs.data,
+      ()  => this.snackService.open('Falha ao carregar marcas de veículos!'));
   }
 }

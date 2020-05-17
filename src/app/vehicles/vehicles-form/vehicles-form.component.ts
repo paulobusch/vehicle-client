@@ -17,6 +17,8 @@ import { UpdateVechicle } from '../mutations/update-vehicle';
 import { GetVehicle } from '../queries/get-vehicle';
 import { VehicleDetail } from '../queries/view-models/vehicle-detail';
 import { SnackService } from 'src/app/shared/services/snack-service';
+import { ListModelsSelect } from 'src/app/models/queries/list-models-select';
+import { ModelSelectList } from 'src/app/models/queries/view-models/model-select-list';
 
 @Component({
   selector: 'app-vehicles-form',
@@ -31,13 +33,15 @@ export class VehiclesFormComponent implements OnInit {
 
   colors: ColorList[] = [];
   fuels: FuelList[] = [];
-  models: ModelList[] = [];
   brands: BrandList[] = [];
+  models: ModelSelectList[] = [];
 
-  fuelName: string;
-  colorName: string;
-  modelName: string;
-  brandName: string;
+  mutationClient = {
+    fuelName: '',
+    colorName: '',
+    modelName: '',
+    brandName: ''
+  };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -75,10 +79,12 @@ export class VehiclesFormComponent implements OnInit {
   setData(vehicle: VehicleDetail) {
     this.vehicle = vehicle;
     this.form.patchValue(this.vehicle);
-    this.fuelName = this.vehicle.fuelName;
-    this.colorName = this.vehicle.colorName;
-    this.brandName = this.vehicle.brandName;
-    this.modelName = this.vehicle.modelName;
+    this.mutationClient = {
+      fuelName: this.vehicle.fuelName,
+      colorName: this.vehicle.colorName,
+      brandName: this.vehicle.brandName,
+      modelName: this.vehicle.modelName
+    };
   }
 
   save() {
@@ -111,6 +117,7 @@ export class VehiclesFormComponent implements OnInit {
     const control = this.form.controls[fieldId];
     control.setValue(valueId);
     control.updateValueAndValidity();
+    this.form.markAsDirty();
   }
 
   isValidForm(): boolean {
@@ -128,6 +135,16 @@ export class VehiclesFormComponent implements OnInit {
     return field.valid || !field.touched;
   }
 
+  loadModels(brandId: string) {
+    this.mutationClient.modelName = '';
+    this.onSelect(null, 'modelId');
+    const listModels = new ListModelsSelect();
+    listModels.brandId = brandId;
+    this.queriesHandler.handle(listModels).subscribe(
+      (rs) => this.models = rs.data,
+      ()  => this.snackService.open('Falha ao carregar modelos de veículos!'));
+  }
+
   loadSelects() {
     const listColors = new ListColors();
     this.queriesHandler.handle(listColors).subscribe(
@@ -138,11 +155,6 @@ export class VehiclesFormComponent implements OnInit {
     this.queriesHandler.handle(listFuels).subscribe(
       (rs) => this.fuels = rs.data,
       ()  => this.snackService.open('Falha ao carregar combustíveis!'));
-
-    const listModels = new ListModels();
-    this.queriesHandler.handle(listModels).subscribe(
-      (rs) => this.models = rs.data,
-      ()  => this.snackService.open('Falha ao carregar modelos de veículos!'));
 
     const listBrands = new ListBrands();
     this.queriesHandler.handle(listBrands).subscribe(
