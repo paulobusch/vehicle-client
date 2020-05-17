@@ -9,6 +9,7 @@ export class UpdateVechicle implements IMutation {
     public fuelId: string;
     public colorId: string;
     public modelId: string;
+    public imageBase64: string;
 
     execute(http: HttpClient, apiUrl: string): Observable<IMutationResult> {
         return http.put<IMutationResult>(`${apiUrl}/vehicles/${this.id}`, this);

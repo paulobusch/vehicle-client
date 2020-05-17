@@ -6,6 +6,14 @@ form {
     margin-top: 10px;
 }
 
-button[type="submit"] {
-    width: 100%; 
+button {
+    width: 100%;
+}
+
+img {
+    width: 100%;
+}
+
+.image-container .actions {
+    margin-top: 18px;
 }

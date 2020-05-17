@@ -10,4 +10,5 @@ export class VehicleDetail {
     public brandName: string;
     public modelId: string;
     public modelName: string;
+    public imageBase64: string;
 }

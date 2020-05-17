@@ -1,0 +1,39 @@
+.modal-app { 
+    top: 10% !important;
+}
+
+.hidden {
+    height: 0 !important;
+    color: white;
+    background-color: white;
+}
+
+.modal-photo div {
+    vertical-align: middle;
+}
+
+.modal-photo .body {
+    min-width: 100vh;
+    height: 60vh;
+    padding: 15px 0;
+    font-size: 12pt;
+} 
+
+.modal-photo .actions button {
+    margin: 0 5px;
+}
+
+.feedback {
+    text-align: center;
+}
+
+.image-preview {
+    width: 100%;
+    text-align: center;
+}
+
+.image-preview label,
+.image-preview img,
+.image-preview image-cropper {
+    margin: 0 auto;
+}

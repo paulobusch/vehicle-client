@@ -19,6 +19,8 @@ import { VehicleDetail } from '../queries/view-models/vehicle-detail';
 import { SnackService } from 'src/app/shared/services/snack-service';
 import { ListModelsSelect } from 'src/app/models/queries/list-models-select';
 import { ModelSelectList } from 'src/app/models/queries/view-models/model-select-list';
+import { VehiclesFormPhotoComponent } from '../vehicles-form-photo/vehicles-form-photo.component';
+import { ModalService } from 'src/app/shared/modal/modal.service';
 
 @Component({
   selector: 'app-vehicles-form',
@@ -46,6 +48,7 @@ export class VehiclesFormComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private modalService: ModalService,
     private formBuilder: FormBuilder,
     private snackService: SnackService,
     private queriesHandler: QueriesHandlerService,
@@ -54,6 +57,7 @@ export class VehiclesFormComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     this.isNew = !this.id;
     this.form = this.formBuilder.group({
+      imageBase64: new FormControl(''),
       year: new FormControl(null, [Validators.min(1950), Validators.required]),
       colorId: new FormControl(null, [Validators.required]),
       fuelId: new FormControl(null, [Validators.required]),
@@ -72,7 +76,7 @@ export class VehiclesFormComponent implements OnInit {
     const query = new GetVehicle(this.id);
     this.queriesHandler.handle(query).subscribe(
       (rs) => this.setData(rs.data),
-      (err) => this.snackService.open('Falha ao carregar veículo!')
+      () => this.snackService.open('Falha ao carregar veículo!')
     );
   }
 
@@ -107,6 +111,18 @@ export class VehiclesFormComponent implements OnInit {
         () => this.snackService.open('Falha ao atualizar veículo!')
       );
     }
+  }
+
+  updatePhoto() {
+    this.modalService.openForm<string>(VehiclesFormPhotoComponent).subscribe(file => {
+      this.form.patchValue({ imageBase64: file });
+      this.form.markAsDirty();
+    });
+  }
+
+  removePhoto() {
+    this.form.patchValue({ imageBase64: null });
+    this.form.markAsDirty();
   }
 
   close() {

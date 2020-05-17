@@ -1,0 +1,35 @@
+<div class="container modal-photo">
+    <div class="header row justify-content-between">
+        <h4>Atualizar imagem</h4>
+        <svg class="bi bi-x pointer" (click)="cancel()" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 010 .708l-7 7a.5.5 0 01-.708-.708l7-7a.5.5 0 01.708 0z" clip-rule="evenodd"/>
+            <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 000 .708l7 7a.5.5 0 00.708-.708l-7-7a.5.5 0 00-.708 0z" clip-rule="evenodd"/>
+        </svg>
+    </div>
+    <div class="body row justify-content-center">
+        <input hidden accept=".png,.jpg" (change)="fileChangeEvent($event)" #fileInput type="file">
+    
+        <div class="feedback">
+            {{ loading ? 'Carregando...' : '' }}
+        </div>
+    
+        <div class="row image-preview" [class.hidden]="loading">
+            <div class="col-8">
+                <label>Seleção</label>
+                <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 3"
+                    resizeToWidth="200" resizeToHeight="200" format="jpg" (imageCropped)="imageCropped($event)"
+                    (loadImageFailed)="loadImageFailed()" (imageLoaded)="loading=false">
+                </image-cropper>
+            </div>
+            <div class="col-4">
+                <label>Resultado</label>
+                <img [src]="croppedImage">
+            </div>
+        </div>
+    </div>
+    
+    <div class="actions row justify-content-end">
+        <button class="btn btn-primary" (click)="cancel()">CANCELAR</button>
+        <button class="btn btn-primary" (click)="confirm()">OK</button>
+    </div>
+</div>

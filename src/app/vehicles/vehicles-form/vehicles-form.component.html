@@ -7,37 +7,44 @@
         </h3>
         <form [formGroup]="form">
             <div class="row justify-content-between">
-                <div class="form-group col-6">
-                    <input type="number" class="form-control" formControlName="year" [class.is-invalid]="!isValidField('year')" placeholder="Ano">
-                    <div class="invalid-feedback">O campo ano deve ser válido!</div>
+                <div class="col-5 image-container">
+                    <div class="row justify-content-center">
+                        <img [src]="form.value.imageBase64 || 'assets/images/default-photo.jpg'"/>
+                    </div>
+                    <div class="actions row justify-content-around">
+                        <button class="btn btn-primary" [class.col-5]="form.value.imageBase64" [class.col-12]="!form.value.imageBase64" (click)="updatePhoto()">{{ form.value.imageBase64 ? 'Atualizar' : 'Adicionar' }}</button>
+                        <button class="btn btn-danger col-5" *ngIf="form.value.imageBase64" (click)="removePhoto()">Remover</button>
+                    </div>
                 </div>
-                <div class="form-group col-6">
-                    <input type="text" class="form-control" [typeaheadMinLength]="0" [typeahead]="colors" [(ngModel)]="mutationClient.colorName" [ngModelOptions]="{standalone: true}" 
-                        (typeaheadOnSelect)="onSelect($event.item.id, 'colorId')" typeaheadOptionField="name" [class.is-invalid]="!isValidField('colorId')" placeholder="Cor"/>
-                    <div class="invalid-feedback">O campo cor deve ser informado!</div>
-                </div>
-            </div>
-            <div class="row justify-content-between">
-                <div class="form-group col-6">
-                    <input type="text" class="form-control" [typeaheadMinLength]="0" [typeahead]="brands" [(ngModel)]="mutationClient.brandName" [ngModelOptions]="{standalone: true}" 
-                        (typeaheadOnSelect)="loadModels($event.item.id); onSelect($event.item.id, 'brandId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('brandId')" placeholder="Marca"/>
-                    <div class="invalid-feedback">O campo marca deve ser informado!</div>
-                </div>
-                <div class="form-group col-6">
-                    <input type="text" class="form-control" [typeaheadMinLength]="0" [typeahead]="models" [(ngModel)]="mutationClient.modelName" [ngModelOptions]="{standalone: true}" 
-                        (typeaheadOnSelect)="onSelect($event.item.id, 'modelId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('modelId')" placeholder="Modelo"/>
-                    <div class="invalid-feedback">O campo modelo deve ser informado!</div>
-                </div>
-            </div>
-            <div class="row justify-content-between">
-                <div class="form-group col-9">
-                    <input type="text" class="form-control" [typeaheadMinLength]="0" [typeahead]="fuels" [(ngModel)]="mutationClient.fuelName" [ngModelOptions]="{standalone: true}" 
-                        (typeaheadOnSelect)="onSelect($event.item.id, 'fuelId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('fuelId')" placeholder="Combustível"/>
-                    <div class="invalid-feedback">O campo combustível deve ser informado!</div>
-                </div>
-                <div class="col-3">
-                    <button type="submit" *ngIf="form.dirty" (click)="save()" class="btn btn-primary">Salvar</button>
-                    <button type="submit" *ngIf="!form.dirty" (click)="close()" class="btn btn-primary">Fechar</button>
+                <div class="col-6">
+                    <div class="form-group row">
+                        <input type="number" class="form-control" formControlName="year" [class.is-invalid]="!isValidField('year')" placeholder="Ano">
+                        <div class="invalid-feedback">O campo ano deve ser válido!</div>
+                    </div>
+                    <div class="form-group row">
+                        <input type="text" class="form-control" [typeaheadMinLength]="0" [typeahead]="colors" [(ngModel)]="mutationClient.colorName" [ngModelOptions]="{standalone: true}" 
+                            (typeaheadOnSelect)="onSelect($event.item.id, 'colorId')" typeaheadOptionField="name" [class.is-invalid]="!isValidField('colorId')" placeholder="Cor"/>
+                        <div class="invalid-feedback">O campo cor deve ser informado!</div>
+                    </div>
+                    <div class="form-group row">
+                        <input type="text" class="form-control" [typeaheadMinLength]="0" [typeahead]="brands" [(ngModel)]="mutationClient.brandName" [ngModelOptions]="{standalone: true}" 
+                            (typeaheadOnSelect)="loadModels($event.item.id); onSelect($event.item.id, 'brandId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('brandId')" placeholder="Marca"/>
+                        <div class="invalid-feedback">O campo marca deve ser informado!</div>
+                    </div>
+                    <div class="form-group row">
+                        <input type="text" class="form-control" [typeaheadMinLength]="0" [typeahead]="models" [(ngModel)]="mutationClient.modelName" [ngModelOptions]="{standalone: true}" 
+                            (typeaheadOnSelect)="onSelect($event.item.id, 'modelId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('modelId')" placeholder="Modelo"/>
+                        <div class="invalid-feedback">O campo modelo deve ser informado!</div>
+                    </div>
+                    <div class="form-group row">
+                        <input type="text" class="form-control" [typeaheadMinLength]="0" [typeahead]="fuels" [(ngModel)]="mutationClient.fuelName" [ngModelOptions]="{standalone: true}" 
+                            (typeaheadOnSelect)="onSelect($event.item.id, 'fuelId')" typeaheadOptionField="name"  [class.is-invalid]="!isValidField('fuelId')" placeholder="Combustível"/>
+                        <div class="invalid-feedback">O campo combustível deve ser informado!</div>
+                    </div>
+                    <div class="actions row">
+                        <button type="submit" *ngIf="form.dirty" (click)="save()" class="btn btn-primary">Salvar</button>
+                        <button type="submit" *ngIf="!form.dirty" (click)="close()" class="btn btn-primary">Fechar</button>
+                    </div>
                 </div>
             </div>
         </form>
