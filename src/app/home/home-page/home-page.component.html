@@ -36,6 +36,7 @@
                         <h5 class="card-title text-success">R$ {{ announcement.priceSale | number: '1.2-2' }}</h5>
                         <div class="demo-color" tooltip="Cor" [style.background-color]="announcement.vehicleColorHex"></div>
                     </div>
+                    <img [src]="getPhotoUrl(announcement.vehicleId, announcement.vehiclePhotoDate)" />
                     <div class="card-body">
                         <span class="card-text text-info"><strong>Ano:</strong> {{ announcement.vehicleYear }}</span><br />
                         <span class="card-text text-info"><strong>Modelo:</strong> {{ announcement.vehicleModelName }}</span><br />

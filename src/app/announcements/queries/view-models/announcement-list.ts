@@ -3,6 +3,8 @@ export class AnnouncementList {
     public dateSale?: string;
     public pricePurchase: number;
     public priceSale: number;
+    public vehicleId: number;
+    public vehiclePhotoDate?: string;
     public vehicleYear: number;
     public vehicleColorName: string;
     public vehicleColorHex: string;

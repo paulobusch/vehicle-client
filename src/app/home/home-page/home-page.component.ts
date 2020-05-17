@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ListState } from 'src/app/shared/metadata/list-state';
 import { AnnouncementList } from 'src/app/announcements/queries/view-models/announcement-list';
 import { BrandList } from 'src/app/brands/queries/view-models/brand-list';
@@ -8,9 +8,10 @@ import { SnackService } from 'src/app/shared/services/snack-service';
 import { ListAnnouncement } from 'src/app/announcements/queries/list-announcements';
 import { ListColors } from 'src/app/vehicles/queries/list-colors';
 import { ColorList } from 'src/app/vehicles/queries/view-models/color-list';
-import { Router } from '@angular/router';
 import { ListModelsSelect } from 'src/app/models/queries/list-models-select';
 import { ModelSelectList } from 'src/app/models/queries/view-models/model-select-list';
+import { Router } from '@angular/router';
+import { environment } from './../../../environments/environment';
 
 @Component({
   selector: 'app-home-page',
@@ -19,6 +20,7 @@ import { ModelSelectList } from 'src/app/models/queries/view-models/model-select
 })
 export class HomePageComponent implements OnInit {
 
+  apiUrl: string = environment.api_url;
   brands: BrandList[] = [];
   models: ModelSelectList[] = [];
   colors: ColorList[] = [];
@@ -94,5 +96,11 @@ export class HomePageComponent implements OnInit {
       (rs) => this.brands = rs.data,
       () => this.snackService.open('Falha ao carregar marcas!')
     );
+  }
+
+  getPhotoUrl(vehicleId: string, dateStr?: string): string {
+    if (!dateStr) return 'assets/images/default-photo.jpg';
+    const dateISO = new Date(dateStr).toISOString();
+    return `${this.apiUrl}/vehicles/${vehicleId}/photo?photoDate=${dateISO}`;
   }
 }

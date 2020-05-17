@@ -10,12 +10,17 @@ table {
 }
 .hidden { display: none !important; }
 .pointer { cursor: pointer; }
-.modal-app { 
-    top: 30%;
+.modal-app {
     padding: 15px; 
+    max-width: 800px;
     border-radius: 5px;
-    vertical-align:middle;
+    vertical-align: middle;
     background-color: white; 
+    overflow: auto;
+}
+
+.top-30 {
+    top: 30%;
 }
 
 .modal-app>div { border: none; }

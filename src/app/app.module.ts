@@ -37,6 +37,8 @@ import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { HomePageComponent } from './home/home-page/home-page.component';
 import { SalesReportComponent } from './reports/sales-report/sales-report.component';
+import { VehiclesFormPhotoComponent } from './vehicles/vehicles-form-photo/vehicles-form-photo.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 registerLocaleData(localePt);
 
@@ -57,10 +59,12 @@ registerLocaleData(localePt);
     BrandsFormComponent,
     ContactFormComponent,
     HomePageComponent,
-    SalesReportComponent
+    SalesReportComponent,
+    VehiclesFormPhotoComponent
   ],
   imports: [
     FormsModule,
+    ImageCropperModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     BrowserModule,
