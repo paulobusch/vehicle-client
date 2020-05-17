@@ -18,7 +18,7 @@
             </div>
             <div class="row justify-content-between">
                 <div class="form-group col-8">
-                    <input type="text" class="form-control" [(ngModel)]="announcementName" typeaheadOptionField="name"  [typeahead]="announcements" 
+                    <input type="text" class="form-control" [typeaheadMinLength]="0" [(ngModel)]="announcementName" typeaheadOptionField="name"  [typeahead]="announcements" 
                         (typeaheadOnSelect)="onSelect($event.item.id, 'announcementId')" [ngModelOptions]="{standalone: true}" [class.is-invalid]="!isValidField('announcementId')" placeholder="Anúncio">
                     <div class="invalid-feedback">O campo Anúncio é obrigatório</div>
                 </div>

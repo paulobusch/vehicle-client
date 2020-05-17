@@ -93,7 +93,7 @@ export class ReservationsFormComponent implements OnInit {
             const contactData = { contactName: value.contactName, contactPhone: value.contactPhone };
             localStorage.setItem('contact', btoa(JSON.stringify(contactData)));
           }
-          if (!this.idAnnouncement) return this.close();
+          if (!this.idAnnouncement || this.authService.validateAuthorization()) return this.close();
           const message = 'O Vendedor irá entrar em contato para combinar o pagamento';
           this.modalService.showInformation('Compra', message).subscribe(() => {
             this.router.navigate(['home']);

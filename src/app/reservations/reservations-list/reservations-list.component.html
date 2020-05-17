@@ -8,13 +8,13 @@
                     </svg>
                 </div>
                 <div class="form-group col-4">
-                    <input type="text" class="form-control" (keyup.enter)="filter()" [(ngModel)]="clientFilter.contactName" placeholder="Cliente"/>
+                    <input type="text" class="form-control" (keyup.enter)="filter()" [(ngModel)]="queryClient.contactName" placeholder="Cliente"/>
                 </div>
                 <div class="form-group col-3">
-                    <input class="form-control" [typeahead]="brands" (keyup.enter)="filter()" (typeaheadOnSelect)="filter()" [(ngModel)]="clientFilter.brandName" typeaheadOptionField="name" placeholder="Marca"/>
+                    <input class="form-control" [typeaheadMinLength]="0" [typeahead]="brands" (keyup.enter)="loadModels($event.item.id); filter()" (typeaheadOnSelect)="loadModels($event.item.id); filter()" [(ngModel)]="queryClient.brandName" typeaheadOptionField="name" placeholder="Marca"/>
                 </div>
                 <div class="form-group col-3">
-                    <input class="form-control" [typeahead]="models" (keyup.enter)="filter()" (typeaheadOnSelect)="filter()" [(ngModel)]="clientFilter.modelName" typeaheadOptionField="name" placeholder="Modelo"/>
+                    <input class="form-control" [typeaheadMinLength]="0" [typeahead]="models" (keyup.enter)="filter()" (typeaheadOnSelect)="filter()" [(ngModel)]="queryClient.modelName" typeaheadOptionField="name" placeholder="Modelo"/>
                 </div>
                 <div  class="form-group col-1 ml-auto">
                     <svg class="bi bi-search pointer" (click)="filter()" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

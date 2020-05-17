@@ -6,13 +6,13 @@ import { ListReservations } from '../queries/list-reservations';
 import { SnackService } from 'src/app/shared/services/snack-service';
 import { ListState } from 'src/app/shared/metadata/list-state';
 import { BrandList } from 'src/app/brands/queries/view-models/brand-list';
-import { ModelList } from 'src/app/models/queries/view-models/model-list';
-import { ListModels } from 'src/app/models/queries/list-models';
 import { ListBrands } from 'src/app/brands/queries/list-brands';
 import { ModalService } from 'src/app/shared/modal/modal.service';
 import { DeleteReservation } from '../mutations/delete-reservation';
 import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handler-service';
 import { FinishReservation } from '../mutations/finish-reservation';
+import { ListModelsSelect } from 'src/app/models/queries/list-models-select';
+import { ModelSelectList } from 'src/app/models/queries/view-models/model-select-list';
 import * as _ from 'lodash';
 
 @Component({
@@ -22,16 +22,15 @@ import * as _ from 'lodash';
 })
 export class ReservationsListComponent implements OnInit {
 
-  query: ListReservations = new ListReservations();
   listState: ListState = new ListState();
-
-  clientFilter = {
+  query: ListReservations = new ListReservations();
+  queryClient = {
     contactName: '',
     brandName: '',
     modelName: ''
   };
 
-  models: ModelList[] = [];
+  models: ModelSelectList[] = [];
   brands: BrandList[] = [];
 
   reservations: ReservationList[] = [];
@@ -63,11 +62,12 @@ export class ReservationsListComponent implements OnInit {
   }
 
   filter() {
-    const rawContact = _.deburr(this.clientFilter.contactName.toLocaleLowerCase());
+    const { brandName, contactName, modelName } = this.queryClient;
+    const rawContact = _.deburr(contactName.toLocaleLowerCase());
     this.reservationsFiltred = this.reservations.filter(reservation => {
-      return (!this.clientFilter.contactName || reservation.contactName.indexOf(rawContact) !== -1)
-        && (!this.clientFilter.modelName || reservation.vehicleModelName === this.clientFilter.modelName)
-        && (!this.clientFilter.brandName || reservation.vehicleBrandName === this.clientFilter.brandName);
+      return (!contactName || reservation.contactName.indexOf(rawContact) !== -1)
+        && (!modelName || reservation.vehicleModelName === modelName)
+        && (!brandName || reservation.vehicleBrandName === brandName);
     });
   }
 
@@ -105,12 +105,16 @@ export class ReservationsListComponent implements OnInit {
     });
   }
 
-  loadSelects() {
-    const listModels = new ListModels();
+  loadModels(brandId: string) {
+    this.queryClient.modelName = '';
+    const listModels = new ListModelsSelect();
+    listModels.brandId = brandId;
     this.queriesHandler.handle(listModels).subscribe(
-      rs => this.models = rs.data,
-      () => this.snackService.open('Falha ao carregar modelos')
-    );
+      (rs) => this.models = rs.data,
+      ()  => this.snackService.open('Falha ao carregar modelos de veículos!'));
+  }
+
+  loadSelects() {
     const listBrands = new ListBrands();
     this.queriesHandler.handle(listBrands).subscribe(
       rs => this.brands = rs.data,

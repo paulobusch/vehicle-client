@@ -11,6 +11,10 @@ import { SnackService } from 'src/app/shared/services/snack-service';
 import { QueriesHandlerService } from 'src/app/shared/handlers/query-handler-service';
 import { VehicleSelectList } from 'src/app/vehicles/queries/view-models/vehicle-select-list';
 import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handler-service';
+import { ModelSelectList } from 'src/app/models/queries/view-models/model-select-list';
+import { BrandList } from 'src/app/brands/queries/view-models/brand-list';
+import { ListModelsSelect } from 'src/app/models/queries/list-models-select';
+import { ListBrands } from 'src/app/brands/queries/list-brands';
 
 @Component({
   selector: 'app-announcements-form',
@@ -24,10 +28,16 @@ export class AnnouncementsFormComponent implements OnInit {
   id: string;
   isNew: boolean;
   announcement: AnnouncementDetail;
+  models: ModelSelectList[] = [];
+  brands: BrandList[] = [];
 
   vehicles: VehicleSelectList[] = [];
 
-  vehicleName: string;
+  mutationClient = {
+    vehicleName: '',
+    modelName: '',
+    brandName: ''
+  };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,6 +52,8 @@ export class AnnouncementsFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       pricePurchase: new FormControl('', [Validators.required]),
       priceSale: new FormControl('', [Validators.required]),
+      modelId: new FormControl('', [Validators.required]),
+      brandId: new FormControl('', [Validators.required]),
       vehicleId: new FormControl('', [Validators.required])
     });
   }
@@ -56,14 +68,14 @@ export class AnnouncementsFormComponent implements OnInit {
     const query = new GetAnnouncement(this.id);
     this.queriesHandler.handle(query).subscribe(
       (rs) => this.setData(rs.data),
-      (err) => this.snackService.open('Falha ao carregar anúncio!')
+      () => this.snackService.open('Falha ao carregar anúncio!')
     );
   }
 
   setData(announcement: AnnouncementDetail) {
     this.announcement = announcement;
     this.form.patchValue(this.announcement);
-    this.vehicleName = this.announcement.vehicleName;
+    Object.assign(this.mutationClient, this.announcement)
   }
 
   save() {
@@ -114,10 +126,30 @@ export class AnnouncementsFormComponent implements OnInit {
     return field.valid || !field.touched;
   }
 
-  loadSelects() {
+  loadModels(brandId: string) {
+    this.mutationClient.modelName = '';
+    this.onSelect(null, 'modelId');
+    const listModels = new ListModelsSelect();
+    listModels.brandId = brandId;
+    this.queriesHandler.handle(listModels).subscribe(
+      (rs) => this.models = rs.data,
+      ()  => this.snackService.open('Falha ao carregar modelos de veículos!'));
+  }
+
+  loadVehicles(modelId: string) {
+    this.mutationClient.vehicleName = '';
+    this.onSelect(null, 'vehicleId');
     const listVehicles = new ListVehiclesSelect();
+    listVehicles.modelId = modelId;
     this.queriesHandler.handle(listVehicles).subscribe(
       (rs) => this.vehicles = rs.data,
       ()  => this.snackService.open('Falha ao carregar veículos!'));
+  }
+
+  loadSelects() {
+    const listBrands = new ListBrands();
+    this.queriesHandler.handle(listBrands).subscribe(
+      (rs) => this.brands = rs.data,
+      ()  => this.snackService.open('Falha ao carregar marcas de veículos!'));
   }
 }

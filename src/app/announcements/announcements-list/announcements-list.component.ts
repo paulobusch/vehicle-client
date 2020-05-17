@@ -13,6 +13,8 @@ import { MutationsHandlerService } from 'src/app/shared/handlers/mutation-handle
 import { AnnouncementList } from '../queries/view-models/announcement-list';
 import { ListAnnouncement } from '../queries/list-announcements';
 import * as moment from 'moment';
+import { ListModelsSelect } from 'src/app/models/queries/list-models-select';
+import { ModelSelectList } from 'src/app/models/queries/view-models/model-select-list';
 
 @Component({
   selector: 'app-announcements-list',
@@ -24,11 +26,11 @@ export class AnnouncementsListComponent implements OnInit {
   announcements: AnnouncementList[] = [];
 
   brands: BrandList[] = [];
-  models: ModelList[] = [];
+  models: ModelSelectList[] = [];
 
-  query: ListAnnouncement = new ListAnnouncement();
   listState: ListState = new ListState();
-  clientFilter =  {
+  query: ListAnnouncement = new ListAnnouncement();
+  queryClient =  {
     modelName: '',
     brandName: '',
     dateSaleStr: ''
@@ -57,8 +59,8 @@ export class AnnouncementsListComponent implements OnInit {
   refresh() {
     this.updateQuery();
     this.listState.reset();
-    if (!this.clientFilter.brandName) this.query.brandId = null;
-    if (!this.clientFilter.modelName) this.query.modelId = null;
+    if (!this.queryClient.brandName) this.query.brandId = null;
+    if (!this.queryClient.modelName) this.query.modelId = null;
     this.queriesHandler.handle(this.query).subscribe(
       (rs) => {
         this.announcements = rs.data;
@@ -69,7 +71,7 @@ export class AnnouncementsListComponent implements OnInit {
   }
 
   updateQuery() {
-    const dateStr = this.clientFilter.dateSaleStr;
+    const dateStr = this.queryClient.dateSaleStr;
     this.query.dateSale = dateStr ? new Date(dateStr) : null;
   }
 
@@ -77,12 +79,16 @@ export class AnnouncementsListComponent implements OnInit {
     this.router.navigate(['announcements', 'edit', id]);
   }
 
-  loadSelects() {
-    const listModels = new ListModels();
+  loadModels(brandId: string) {
+    this.queryClient.modelName = '';
+    const listModels = new ListModelsSelect();
+    listModels.brandId = brandId;
     this.queriesHandler.handle(listModels).subscribe(
-      rs => this.models = rs.data,
-      () => this.snackService.open('Falha ao carregar modelos')
-    );
+      (rs) => this.models = rs.data,
+      ()  => this.snackService.open('Falha ao carregar modelos de veículos!'));
+  }
+
+  loadSelects() {
     const listBrands = new ListBrands();
     this.queriesHandler.handle(listBrands).subscribe(
       rs => this.brands = rs.data,

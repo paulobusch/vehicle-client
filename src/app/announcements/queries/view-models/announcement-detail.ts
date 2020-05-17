@@ -5,4 +5,8 @@ export class AnnouncementDetail {
     public dateSale: Date;
     public vehicleId: string;
     public vehicleName: string;
+    public modelId: string;
+    public modelName: string;
+    public brandId: string;
+    public brandName: string;
 }

@@ -8,13 +8,13 @@
                         <input type="number" class="form-control" [(ngModel)]="query.year" (keyup.enter)="search()" placeholder="Ano">
                     </div>
                     <div class="form-group col-3">
-                        <input class="form-control" [typeahead]="colors" (keyup.enter)="search()" (typeaheadOnSelect)="query.colorId=$event.item.id; search()" [(ngModel)]="clientFilter.colorName" typeaheadOptionField="name" placeholder="Cor"/>
+                        <input class="form-control" [typeaheadMinLength]="0" [typeahead]="colors" (keyup.enter)="search()" (typeaheadOnSelect)="query.colorId=$event.item.id; search()" [(ngModel)]="queryClient.colorName" typeaheadOptionField="name" placeholder="Cor"/>
                     </div>
                     <div class="form-group col-3">
-                        <input class="form-control" [typeahead]="brands" (keyup.enter)="search()" (typeaheadOnSelect)="query.brandId=$event.item.id; search()" [(ngModel)]="clientFilter.brandName" typeaheadOptionField="name" placeholder="Marca"/>
+                        <input class="form-control" [typeaheadMinLength]="0" [typeahead]="brands" (keyup.enter)="loadModels($event.item.id); search()" (typeaheadOnSelect)="query.brandId=$event.item.id; loadModels($event.item.id); search()" [(ngModel)]="queryClient.brandName" typeaheadOptionField="name" placeholder="Marca"/>
                     </div>
                     <div class="form-group col-3">
-                        <input class="form-control" [typeahead]="models" (keyup.enter)="search()" (typeaheadOnSelect)="query.modelId=$event.item.id; search()" [(ngModel)]="clientFilter.modelName" typeaheadOptionField="name" placeholder="Modelo"/>
+                        <input class="form-control" [typeaheadMinLength]="0" [typeahead]="models" (keyup.enter)="search()" (typeaheadOnSelect)="query.modelId=$event.item.id; search()" [(ngModel)]="queryClient.modelName" typeaheadOptionField="name" placeholder="Modelo"/>
                     </div>
                     <div  class="form-group col-1 ml-auto">
                         <svg class="bi bi-search pointer" (click)="search()" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@
                   </div>
             </div>
         </div>
-        <div class="pagination" [class.hidden]="!listState.done">
+        <div class="pagination" *ngIf="listState.done">
             <div>
                 <select [(ngModel)]="query.limit" (change)="search()">
                     <option value="10">10</option>
