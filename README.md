@@ -4,7 +4,7 @@
 
 ## Comandos para iniciar
  - npm install
- - ng serve
+ - npm run start
  
 ## Acesso
  - Acessar o endereço http://localhost:4200 no navegador
